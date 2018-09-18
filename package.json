@@ -18,11 +18,11 @@
   "readmeFilename": "README.md",
   "license": "MIT",
   "dependencies": {
-    "buffer": "^5.2.1",
-    "node-fetch": "^2.2.0"
+    "buffer": ">=5.0.0",
+    "node-fetch": ">=2.0.0"
   },
   "engines": {
-    "node": "*"
+    "node": ">=8.0.0"
   },
   "bugs": {
     "url": "https://github.com/tgamauf/onetimesecret-api/issues"
@@ -33,7 +33,7 @@
     "test": "jest"
   },
   "devDependencies": {
-    "eslint": "^5.6.0",
-    "jest": "^23.6.0"
+    "eslint": ">=5.0.0",
+    "jest": ">=22.0.0"
   }
 }
