@@ -1,6 +1,6 @@
 {
   "name": "onetimesecret-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "node.js module for the OneTimeSecret API",
   "main": "index.js",
   "repository": {
@@ -28,7 +28,6 @@
     "url": "https://github.com/tgamauf/onetimesecret-api/issues"
   },
   "homepage": "https://github.com/tgamauf/onetimesecret-api",
-  "_id": "onetimesecret-api@1.0.0",
   "scripts": {
     "test": "jest"
   },
