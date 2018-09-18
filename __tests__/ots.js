@@ -7,7 +7,6 @@ const OneTimeSecretApi = require("../index");
 
 // Test status and all general behaviors
 test("server status is ok", async () => {
-
     expect.assertions(1);
     let ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "ok_url"});
     const response = await ots.status();
@@ -15,7 +14,6 @@ test("server status is ok", async () => {
 });
 
 test("server status is not ok", async () => {
-
     expect.assertions(1);
     let ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "status_offline_url"});
     const response = await ots.status();
@@ -23,7 +21,6 @@ test("server status is not ok", async () => {
 });
 
 test("invalid credentials", async () => {
-
     expect.assertions(1);
     try {
         let ots = new OneTimeSecretApi("invalid_user", "ok_api_key", {url: "ok_url"});
@@ -43,7 +40,7 @@ test("invalid api version", async () => {
             "ok_api_key",
             {
                 url: "ok_url",
-                api_version: "invalid_version"
+                apiVersion: "invalid_version"
             });
         await ots.status();
     } catch (e) {
@@ -54,7 +51,6 @@ test("invalid api version", async () => {
 });
 
 test("invalid request", async () => {
-
     expect.assertions(1);
     try {
         let ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "error_400_url"});
@@ -67,7 +63,6 @@ test("invalid request", async () => {
 });
 
 test("server error", async () => {
-
     expect.assertions(1);
     try {
         let ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "error_500_url"});
@@ -81,7 +76,6 @@ test("server error", async () => {
 
 // Test share
 test("share ok", async () => {
-
     expect.assertions(1);
     let ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "ok_url"});
     const response = await ots.share("test");
@@ -89,7 +83,6 @@ test("share ok", async () => {
 });
 
 test("share with optional parameters ok", async () => {
-
     expect.assertions(1);
     let ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "ok_url"});
     const response = await ots.share("test", {passphrase: "yes", ttl: 10, recipient: "me"});
@@ -97,7 +90,6 @@ test("share with optional parameters ok", async () => {
 });
 
 test("share no secret", async () => {
-
     expect.assertions(1);
     try {
         let ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "ok_url"});
@@ -109,7 +101,6 @@ test("share no secret", async () => {
 
 // Test share link
 test("share link ok", async () => {
-
     expect.assertions(1);
     let ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "ok_url"});
     const response = await ots.shareLink("test");
@@ -117,7 +108,6 @@ test("share link ok", async () => {
 });
 
 test("share with optional parameters ok", async () => {
-
     expect.assertions(1);
     let ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "ok_url"});
     const response = await ots.shareLink("test", {passphrase: "yes", ttl: 10, recipient: "me"});
@@ -126,7 +116,6 @@ test("share with optional parameters ok", async () => {
 
 // Test generate
 test("generate ok", async () => {
-
     expect.assertions(1);
     let ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "ok_url"});
     const response = await ots.generate();
@@ -134,7 +123,6 @@ test("generate ok", async () => {
 });
 
 test("share with optional parameters ok", async () => {
-
     expect.assertions(1);
     let ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "ok_url"});
     const response = await ots.generate({passphrase: "yes", ttl: 10, recipient: "me"});
@@ -143,7 +131,6 @@ test("share with optional parameters ok", async () => {
 
 // Test retrieve secret
 test("retrieve secret ok", async () => {
-
     expect.assertions(1);
     let ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "ok_url"});
     const response = await ots.retrieve_secret("mykey");
@@ -151,7 +138,6 @@ test("retrieve secret ok", async () => {
 });
 
 test("retrieve secret with password ok", async () => {
-
     expect.assertions(1);
     let ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "ok_url"});
     const response = await ots.retrieve_secret("mykey", {passphrase: "yes"});
@@ -159,7 +145,6 @@ test("retrieve secret with password ok", async () => {
 });
 
 test("retrieve secret no secret_key", async () => {
-
     expect.assertions(1);
     try {
         let ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "ok_url"});
@@ -171,7 +156,6 @@ test("retrieve secret no secret_key", async () => {
 
 // Test retrieve metadata
 test("retrieve metadata ok", async () => {
-
     expect.assertions(1);
     let ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "ok_url"});
     const response = await ots.retrieve_metadata("mykey");
@@ -179,7 +163,6 @@ test("retrieve metadata ok", async () => {
 });
 
 test("retrieve secret no metadata_key", async () => {
-
     expect.assertions(1);
     try {
         let ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "ok_url"});
@@ -191,15 +174,13 @@ test("retrieve secret no metadata_key", async () => {
 
 // Test burn secret
 test("burn secret ok", async () => {
-
     expect.assertions(1);
     let ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "ok_url"});
-    const response = await ots.burn("mykey");
+    const response = await ots.burn("burnKey");
     expect(response.state).toEqual("burned");
 });
 
 test("burn secret metadata_key", async () => {
-
     expect.assertions(1);
     try {
         let ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "ok_url"});
@@ -211,7 +192,6 @@ test("burn secret metadata_key", async () => {
 
 // Test recent metadata
 test("recent metadata ok", async () => {
-
     expect.assertions(1);
     let ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "ok_url"});
     const response = await ots.recent_metadata();
