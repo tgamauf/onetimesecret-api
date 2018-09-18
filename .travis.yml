@@ -8,4 +8,4 @@ env:
 - JEST_VERSION=^22.0.0
 - JEST_VERSION=^23.0.0
 script:
-- npm run test:ci
+- npm run test
