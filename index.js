@@ -1,3 +1,3 @@
-import OneTimeSecretApi from "./lib/ots";
+const OneTimeSecretApi = require('./lib/ots.js');
 
-export default OneTimeSecretApi;
+module.exports = exports = OneTimeSecretApi;

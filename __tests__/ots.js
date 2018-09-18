@@ -1,8 +1,8 @@
 jest.mock("node-fetch");
 
-import OneTimeSecretApi from "../index";
+const OneTimeSecretApi = require("../index");
 
-// The username, api_key, url, version, ... can have special meaning
+// The username, apiKey, url, version, ... can have special meaning
 // The meaning is defined in the node-fetch mock
 
 // Test status and all general behaviors
@@ -112,7 +112,7 @@ test("share link ok", async () => {
 
     expect.assertions(1);
     let ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "ok_url"});
-    const response = await ots.share_link("test");
+    const response = await ots.shareLink("test");
     expect(response).toEqual("ok_url/secret/test");
 });
 
@@ -120,7 +120,7 @@ test("share with optional parameters ok", async () => {
 
     expect.assertions(1);
     let ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "ok_url"});
-    const response = await ots.share_link("test", {passphrase: "yes", ttl: 10, recipient: "me"});
+    const response = await ots.shareLink("test", {passphrase: "yes", ttl: 10, recipient: "me"});
     expect(response).toEqual("ok_url/secret/test");
 });
 
