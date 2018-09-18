@@ -1,0 +1,39 @@
+{
+  "name": "onetimesecret-api",
+  "version": "1.0.0",
+  "description": "node.js module for the OneTimeSecret API",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tgamauf/onetimesecret-api.git"
+  },
+  "keywords": [
+    "onetimesecret",
+    "api",
+    "promises"
+  ],
+  "author": {
+    "name": "Thomas Gamauf"
+  },
+  "readmeFilename": "README.md",
+  "license": "MIT",
+  "dependencies": {
+    "buffer": "^5.2.1",
+    "node-fetch": "^2.2.0"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "bugs": {
+    "url": "https://github.com/tgamauf/onetimesecret-api/issues"
+  },
+  "homepage": "https://github.com/tgamauf/onetimesecret-api",
+  "_id": "onetimesecret-api@1.0.0",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "eslint": "^5.6.0",
+    "jest": "^23.6.0"
+  }
+}
