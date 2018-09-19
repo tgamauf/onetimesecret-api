@@ -33,7 +33,7 @@ In order to use the API the API class must be imported and setup to get a handle
 OneTimeSecretApi(<username>, <api_key>, [<options>])
 ```
 
-- `<username>`: username specified during sign-up at the [OneTimeSecret Service](https://onetimesecret.com), or your server of choice (if defined in the <options>)
+- `<username>`: username specified during sign-up at the [OneTimeSecret Service](https://onetimesecret.com), or your server of choice (if defined in the `<options>`)
 - `<api_key>`: API key created for your account
 - `<options>`: additional api options
     - `<url>`: server url of a custom server
