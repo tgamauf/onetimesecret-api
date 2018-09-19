@@ -7,10 +7,10 @@ A thin Javascript wrapper around the [OneTimeSecret API](https://onetimesecret.c
 
 The module is published on NPM as *onetimesecret-api*.
 
-###Dependencies
+### Dependencies
 - Node.js: 8+
 
-###Installation
+### Installation
 ```bash
 yarn add onetimesecret-api
 ```
@@ -22,7 +22,7 @@ npm install onetimesecret-api
 ```
 
 
-###Usage
+### Usage
 The API wrapper is implemented for [asynchronous control flow using promises](https://howtonode.org/promises). For most calls the promise resolves into a Javascript object containing all attributes provided by the server. Configuration or server errors are thrown and have to be handled by the caller.   
 Only the most important attributes of a call are documented here, please check out the [API description](https://onetimesecret.com/docs/api) for the full documentation.
 
@@ -54,7 +54,7 @@ const ots = new OneTimeSecretApi(
     { url: "https://www.my-ots-server.com", apiVersion: "v1" });
 ```
     
-####Status
+#### Status
 Request the server status as boolean.
 
 ```
@@ -72,7 +72,7 @@ ots.status()
 });
 ```
 
-####Share
+#### Share
 Encrypt and share a secret.
 
 ```
@@ -110,7 +110,7 @@ ots.share('My very special secret', { ttl: 3600 })
 });
 ```
 
-####Share Link
+#### Share Link
 Encrypt and share a secret, but return the share link instead of the secret key. This call isn't provided by the API.
 
 ```
@@ -135,7 +135,7 @@ ots.shareLink('My very special secret')
 });
 ```
 
-####Generate
+#### Generate
 Generate a short, encrypted secret and share it.
 
 ```
@@ -163,7 +163,7 @@ ots.generate()
 ```
 
 
-####Retrieve secret
+#### Retrieve secret
 Retrieve a secret from the server. This call is used to get a secret someone else shared with you. If the secret was shared with a passphrase it has to be provided to the call in the options.
 
 ```
@@ -189,7 +189,7 @@ ots.retrieve_secret('raldp8')
 ```
 
 
-####Retrieve metadata
+#### Retrieve metadata
 Retrieve metadata for a secret you created.
 
 ```
@@ -214,7 +214,7 @@ ots.retrieve_metadata('raldp8yshsh42hyse')
 ```
 
 
-####Burn secret
+#### Burn secret
 Destroy a secret you created.
 
 ```
@@ -239,7 +239,7 @@ ots.burn('raldp8yshsh42hyse')
 ```
 
 
-####Retrieve recent secrets
+#### Retrieve recent secrets
 Retrieve all recently created secrets and *most* of its metadata.
 
 ```
