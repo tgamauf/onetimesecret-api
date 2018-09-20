@@ -2,7 +2,7 @@
   "name": "onetimesecret-api",
   "version": "1.0.2",
   "description": "node.js module for the OneTimeSecret API",
-  "main": "index.js",
+  "main": "index.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/tgamauf/onetimesecret-api.git"
@@ -32,7 +32,11 @@
     "test": "jest"
   },
   "devDependencies": {
+    "@types/node": "^10.10.1",
+    "@types/node-fetch": "^2.1.2",
     "eslint": ">=5.0.0",
-    "jest": ">=22.0.0"
+    "jest": ">=22.0.0",
+    "typescript": "^3.0.3",
+    "typescript-eslint-parser": "^18.0.0"
   }
 }

@@ -1,12 +1,37 @@
 /**
  * Module provides functionality to provide API requests.
  */
+
+
 'use strict';
-Object.defineProperty(exports, "__esModule", { value: true });
-var apiV1 = require("./api_v1");
-var API_VERSIONS = ['v1'];
+
+import * as apiV1 from './api_v1';
+import {ApiRequest, ApiRequestInit} from "./request";
+
+
+type RequestType = (
+    'status' |
+    'share' |
+    'generate' |
+    'retrieve_secret' |
+    'retrieve_metadata' |
+    'burn' |
+    'recent_metadata');
+
+type ApiVersion = 'v1';
+
+// TODO remove if not used
+type ApiVersionEntries = {
+    [key in ApiVersion]: ApiRequest;
+};
+type RequestConfig = {
+    [key in RequestType]: ApiVersionEntries;
+}
+
+const API_VERSIONS: string[] = [ 'v1' ];
+
 // TODO this should be of type RequestConfig, but it complains about derived classes not having path
-var REQUEST_CONFIG = {
+const REQUEST_CONFIG: object = {
     status: {
         v1: apiV1.ApiRequestStatus
     },
@@ -29,6 +54,7 @@ var REQUEST_CONFIG = {
         v1: apiV1.ApiRequestRecentMetadata
     }
 };
+
 /**
  * Create an API request object of given type using the given init parameter
  * for the provided API version, if provided.
@@ -40,8 +66,15 @@ var REQUEST_CONFIG = {
  *
  * @returns request object of specified type
  */
-function createApiRequest(requestType, apiVersion, init) {
+function createApiRequest(
+        requestType: RequestType,
+        apiVersion: ApiVersion,
+        init: ApiRequestInit): any {
     return new REQUEST_CONFIG[requestType](init);
 }
-exports.createApiRequest = createApiRequest;
-//# sourceMappingURL=request_factory.js.map
+
+export {
+    RequestType,
+    ApiVersion,
+    createApiRequest
+};
