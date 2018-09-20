@@ -2,7 +2,6 @@
  * Module defines generic requests.
  */
 
-
 "use strict";
 
 import {Buffer} from "buffer";
@@ -85,7 +84,7 @@ async function fetchWithTimeout(
         init = options.init;
     }
 
-    // TODO resolve should be of type Response and reject of type Error imho, but this doesn"t work
+    // TODO resolve should be of type Response and reject of type Error imho, but this doesn't work
     return new Promise((resolve: any, reject: any) => {
         let didTimeOut: boolean = false;
         let timeout: any;

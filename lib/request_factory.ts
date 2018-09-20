@@ -2,7 +2,6 @@
  * Module provides functionality to provide API requests.
  */
 
-
 "use strict";
 
 import * as apiV1 from "./api_v1";

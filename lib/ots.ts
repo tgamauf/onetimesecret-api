@@ -2,7 +2,6 @@
  * API implementation.
  */
 
-
 "use strict";
 
 import {ApiRequest} from "./request";
@@ -337,8 +336,8 @@ class OneTimeSecretApi {
         return await request.send();
     }
 
+    /** Create the secret link from the secret. */
     private createSecretUrl(secretKey: string): string {
-        /** Create the secret link from the secret. */
 
         return [this.init.url, "secret", secretKey].join("/");
     }
