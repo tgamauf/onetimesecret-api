@@ -72,7 +72,7 @@ function urlEncodeDict(data: object): string {
  */
 async function fetchWithTimeout(
         url: string,
-        // TODO Promise should actually be type Response, but this doesn"t work
+        // TODO Promise should actually be type Response, but this doesn't work
         options?: FetchWithTimeoutOptions): Promise<any> {
     let fetchTimeout: number;
     let init: FetchInit;
@@ -127,7 +127,6 @@ class ApiRequest {
 
     private readonly headers: Headers;
     private apiUrl: string;
-
     /**
      * Create a OTS API request.
      *
