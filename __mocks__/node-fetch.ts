@@ -89,7 +89,7 @@ const REQUESTS = [
     },
     {
         // retrieve secret unknown key
-        PATH_PATTERN: new RegExp(`${[BASE_PATH_REGEX,"secret", "unknownKey"].join('/')}`),
+        PATH_PATTERN: new RegExp(`${[BASE_PATH_REGEX, "secret", "unknownKey"].join("/")}`),
         METHOD: "POST",
         BODY: new RegExp("^passphrase=\\w+$"),
         BODY_REQUIRED: false,

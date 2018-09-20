@@ -168,7 +168,6 @@ class ApiRequest {
 
     private readonly headers: Headers;
     private apiUrl: string;
-
     /**
      * Create a OTS API request.
      *
