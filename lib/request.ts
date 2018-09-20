@@ -131,7 +131,7 @@ async function fetchWithTimeout(
         let timeout: any;
 
         if (!isUndefined(fetchTimeout)) {
-            timeout = setTimeout(() => {
+            timeout = setTimeout((): void => {
                     didTimeOut = true;
 
                     reject(new TimeoutError("Request timed out"));
@@ -168,6 +168,7 @@ class ApiRequest {
 
     private readonly headers: Headers;
     private apiUrl: string;
+
     /**
      * Create a OTS API request.
      *
