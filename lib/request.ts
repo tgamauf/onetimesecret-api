@@ -40,6 +40,47 @@ interface JsonErrorResponse {
 }
 
 
+class TimeoutError extends Error {
+    constructor(message: string) {
+        super(message);
+
+        Object.setPrototypeOf(this, TimeoutError.prototype);
+    }
+}
+
+class UnknownSecretError extends Error {
+    constructor(message: string) {
+        super(message);
+
+        Object.setPrototypeOf(this, UnknownSecretError.prototype);
+    }
+}
+
+class NotFoundError extends Error {
+    constructor(message: string) {
+        super(message);
+
+        Object.setPrototypeOf(this, NotFoundError.prototype);
+    }
+}
+
+class NotAuthorizedError extends Error {
+    constructor(message: string) {
+        super(message);
+
+        Object.setPrototypeOf(this, NotAuthorizedError.prototype);
+    }
+}
+
+class RateLimitedError extends Error {
+    constructor(message: string) {
+        super(message);
+
+        Object.setPrototypeOf(this, RateLimitedError.prototype);
+    }
+}
+
+
 /**
  * Join up the parameters in the dict to conform to
  * application/x-www-form-urlencoded encoding.
@@ -85,7 +126,7 @@ async function fetchWithTimeout(
     }
 
     // TODO resolve should be of type Response and reject of type Error imho, but this doesn't work
-    return new Promise((resolve: any, reject: any) => {
+    return new Promise((resolve: any, reject: any): void => {
         let didTimeOut: boolean = false;
         let timeout: any;
 
@@ -93,7 +134,7 @@ async function fetchWithTimeout(
             timeout = setTimeout(() => {
                     didTimeOut = true;
 
-                    reject(new Error("Request timed out"));
+                    reject(new TimeoutError("Request timed out"));
                 },
                 fetchTimeout);
         }
@@ -165,12 +206,37 @@ class ApiRequest {
             {init, ...defaultOptions, ...options});
 
         if (!response.ok) {
+            if (isUndefined(response.headers)) {
+                throw new Error(
+                    `url='${url}', status=${response.status}, `
+                    + `message='${response.statusText}', headers missing`);
+            }
+
             const contentType: string = response.headers.get("Content-Type");
             if (contentType && contentType.indexOf("application/json") !== -1) {
                 return response.json().then((data: JsonErrorResponse): void => {
-                    throw new Error(
-                        `url="${url}", status=${response.status}, `
-                        + `message="${data.message}"`);
+                    let error: Error;
+
+                    switch (data.message) {
+                        case "Unknown secret":
+                            error = new UnknownSecretError("Unknown secret");
+                            break;
+                        case "Not Found":
+                            error = new NotFoundError("Metadata not found");
+                            break;
+                        case "Not authorized":
+                            error = new NotAuthorizedError("Request not authorized");
+                            break;
+                        case "Apologies dear citizen! You have been rate limited.":
+                            error = new RateLimitedError("You have been rate limited.");
+                            break;
+                        default:
+                            error = new Error(
+                                `url="${url}", status=${response.status}, `
+                                + `message="${data.message}"`);
+                    }
+
+                    throw error;
                 });
             } else {
                 throw new Error(
@@ -216,6 +282,11 @@ class ApiRequest {
 }
 
 export {
+    TimeoutError,
+    UnknownSecretError,
+    NotFoundError,
+    NotAuthorizedError,
+    RateLimitedError,
     Method,
     ApiRequestInit,
     urlEncodeDict,

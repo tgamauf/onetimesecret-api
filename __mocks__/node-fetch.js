@@ -41,6 +41,10 @@ var Response = /** @class */ (function () {
     return Response;
 }());
 exports.Response = Response;
+var ERROR_RESPONSE_HEADER = new Headers();
+ERROR_RESPONSE_HEADER.append("Content-Type", "text/plain");
+var ERROR_RESPONSE_HEADER_JSON = new Headers();
+ERROR_RESPONSE_HEADER_JSON.append("Content-Type", "application/json");
 var BASE_PATH_REGEX = "" + [OK_URL, "api", OK_API_VERSION].join("/");
 var REQUESTS = [
     {
@@ -68,11 +72,19 @@ var REQUESTS = [
     },
     {
         // retrieve secret
-        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, "secret", "\\w+$"].join("/")),
+        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, "secret", "secretKey"].join("/")),
         METHOD: "POST",
         BODY: new RegExp("^passphrase=\\w+$"),
         BODY_REQUIRED: false,
         RESPONSE: new Response({ value: "secret" }, { ok: true, status: 200 })
+    },
+    {
+        // retrieve secret unknown key
+        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, "secret", "unknownKey"].join('/')),
+        METHOD: "POST",
+        BODY: new RegExp("^passphrase=\\w+$"),
+        BODY_REQUIRED: false,
+        RESPONSE: new Response({ message: "Unknown secret" }, { ok: false, status: 404, headers: ERROR_RESPONSE_HEADER_JSON })
     },
     {
         // retrieve metadata
@@ -97,14 +109,10 @@ var REQUESTS = [
     },
 ];
 var RESPONSE_SERVER_OFFLINE = new Response({ status: "offline" }, { ok: true, status: 200 });
-var ERROR_RESPONSE_HEADER = new Headers();
-ERROR_RESPONSE_HEADER.append("Content-Type", "text/plain");
-var ERROR_RESPONSE_HEADER_JSON = new Headers();
-ERROR_RESPONSE_HEADER_JSON.append("Content-Type", "application/json");
-var RESPONSE_ERROR_NOT_AUTH = new Response({ message: 'not authorized' }, {
+var RESPONSE_ERROR_NOT_AUTH = new Response({ message: "Not authorized" }, {
     ok: false,
     status: 404,
-    statusText: "404 json error",
+    statusText: "Not found",
     headers: ERROR_RESPONSE_HEADER_JSON
 });
 var RESPONSE_ERROR_400 = new Response(null, {

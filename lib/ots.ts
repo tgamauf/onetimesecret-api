@@ -4,6 +4,7 @@
 
 "use strict";
 
+import {isUndefined} from "util";
 import {ApiRequest} from "./request";
 import {ApiVersion, createApiRequest} from "./request_factory";
 
@@ -133,6 +134,14 @@ const DEFAULT_URL: string = "https://onetimesecret.com";
 const DEFAULT_API_VERSION: ApiVersion = "v1";
 
 
+class ConfigError extends Error {
+    constructor(message: string) {
+        super(message);
+
+        Object.setPrototypeOf(this, ConfigError.prototype);
+    }
+}
+
 class OneTimeSecretApi {
     private readonly init: ApiInit;
     private readonly apiVersion: ApiVersion;
@@ -151,6 +160,10 @@ class OneTimeSecretApi {
             apiVersion: DEFAULT_API_VERSION,
             url: DEFAULT_URL,
         };
+
+        if (isUndefined(username) || isUndefined(password)) {
+            throw new ConfigError("No username or password provided");
+        }
 
         this.init = {
             username,
@@ -191,6 +204,10 @@ class OneTimeSecretApi {
      */
     public async share(secret: string,
                        options?: ApiOptionsShare): Promise<ApiResponseShare> {
+        if (isUndefined(secret)) {
+            throw new ConfigError("No secret provided");
+        }
+
         const init: ApiInitShare = {
             ...JSON.parse(JSON.stringify(this.init)),
             secret,
@@ -256,6 +273,9 @@ class OneTimeSecretApi {
     public async retrieve_secret(
         secretKey: string,
         options?: ApiOptionsRetrieveSecret): Promise<ApiResponseRetrieveSecret> {
+        if (isUndefined(secretKey)) {
+            throw new ConfigError("No secret_key provided");
+        }
         const init: ApiInitRetrieveSecret = {
             ...JSON.parse(JSON.stringify(this.init)),
             secretKey,
@@ -282,6 +302,9 @@ class OneTimeSecretApi {
      */
     public async retrieve_metadata(
         metadataKey: string): Promise<ApiResponseRetrieveMetadata> {
+        if (isUndefined(metadataKey)) {
+            throw new ConfigError("No metadata_key provided");
+        }
         const init: ApiInitRetrieveMetadata = {
             ...JSON.parse(JSON.stringify(this.init)),
             metadataKey,
@@ -306,6 +329,10 @@ class OneTimeSecretApi {
      * @throws error if no metadata key defined or connection/request fails
      */
     public async burn(metadataKey: string): Promise<ApiResponseBurn> {
+        if (isUndefined(metadataKey)) {
+            throw new ConfigError("No metadata_key provided");
+        }
+
         const init: ApiInitBurn = {
             ...JSON.parse(JSON.stringify(this.init)),
             metadataKey,
@@ -344,6 +371,7 @@ class OneTimeSecretApi {
 }
 
 export {
+    ConfigError,
     ApiVersion,
     ApiResponseState,
     ApiOptionsShare,
