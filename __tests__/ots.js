@@ -162,6 +162,7 @@ test("share ok", function () { return __awaiter(_this, void 0, void 0, function 
             case 1:
                 response = _a.sent();
                 expect(response.secret_key).toEqual("test");
+                expect(response.share_link).toEqual("ok_url/secret/test");
                 return [2 /*return*/];
         }
     });
@@ -245,7 +246,8 @@ test("generate ok", function () { return __awaiter(_this, void 0, void 0, functi
                 return [4 /*yield*/, ots.generate()];
             case 1:
                 response = _a.sent();
-                expect(response.value).toEqual("generated");
+                expect(response.secret_key).toEqual("generated");
+                expect(response.share_link).toEqual("ok_url/secret/generated");
                 return [2 /*return*/];
         }
     });
@@ -260,7 +262,7 @@ test("share with optional parameters ok", function () { return __awaiter(_this, 
                 return [4 /*yield*/, ots.generate({ passphrase: "yes", ttl: 10, recipient: "me" })];
             case 1:
                 response = _a.sent();
-                expect(response.value).toEqual("generated");
+                expect(response.secret_key).toEqual("generated");
                 return [2 /*return*/];
         }
     });
@@ -352,6 +354,24 @@ test("retrieve metadata ok", function () { return __awaiter(_this, void 0, void 
             case 1:
                 response = _a.sent();
                 expect(response.secret_key).toEqual("secret");
+                expect(response.share_link).toEqual("ok_url/secret/secret");
+                return [2 /*return*/];
+        }
+    });
+}); });
+// Test retrieve metadata of burned secret
+test("retrieve metadata ok", function () { return __awaiter(_this, void 0, void 0, function () {
+    var ots, response;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                expect.assertions(2);
+                ots = new index_1.OneTimeSecretApi("ok_user", "ok_api_key", { url: "ok_url" });
+                return [4 /*yield*/, ots.retrieve_metadata("myBurnedKey")];
+            case 1:
+                response = _a.sent();
+                expect(response.metadata_key).toEqual("metadata");
+                expect(response.share_link).toBeUndefined();
                 return [2 /*return*/];
         }
     });

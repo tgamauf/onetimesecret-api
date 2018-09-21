@@ -112,9 +112,9 @@ function urlEncodeDict(data: object): string {
  * @throws error on timeout and if fetch fails
  */
 async function fetchWithTimeout(
-        url: string,
-        // TODO Promise should actually be type Response, but this doesn't work
-        options?: FetchWithTimeoutOptions): Promise<any> {
+    url: string,
+    // TODO Promise should actually be type Response, but this doesn't work
+    options?: FetchWithTimeoutOptions): Promise<any> {
     let fetchTimeout: number;
     let init: FetchInit;
 
@@ -125,8 +125,7 @@ async function fetchWithTimeout(
         init = options.init;
     }
 
-    // TODO resolve should be of type Response and reject of type Error imho, but this doesn't work
-    return new Promise((resolve: any, reject: any): void => {
+    return new Promise((resolve: Function, reject: Function): void => {
         let didTimeOut: boolean = false;
         let timeout: any;
 
@@ -150,8 +149,8 @@ async function fetchWithTimeout(
                     resolve(response);
                 }
             })
-            .catch((error): void => {
-                  // Rejection already happened with setTimeout
+            .catch((error: any): void => {
+                // Rejection already happened with setTimeout
                 if (didTimeOut) {
                     return;
                 }
@@ -168,6 +167,7 @@ class ApiRequest {
 
     private readonly headers: Headers;
     private apiUrl: string;
+
     /**
      * Create a OTS API request.
      *

@@ -45,6 +45,7 @@ interface ApiResponseShare {
     custid: string;
     metadata_key: string;
     secret_key: string;
+    share_link: string;
     ttl: number;
     metadata_ttl: number;
     secret_ttl: number;
@@ -92,6 +93,7 @@ interface ApiResponseRetrieveMetadata {
     created: number;
     recipient: string[];
     secret_key?: string;
+    share_link?: string;
     secret_ttl?: number;
     received?: number;
     passphrase_required?: boolean;
@@ -219,12 +221,21 @@ class OneTimeSecretApi {
             this.apiVersion,
             init);
 
-        return await request.send();
+        const response = await request.send();
+
+        const shareLink: string = this.createSecretUrl(
+            response.secret_key);
+
+        return {
+            share_link: shareLink,
+            ...response,
+        };
     }
 
     /**
      * Share a secret and get the link.
      *
+     * @deprecated will be removed in next major version
      * @param secret the secret value to encrypt and share (max. 1k-10k length
      *      depending on your account)
      * @param options optional parameters
@@ -232,9 +243,10 @@ class OneTimeSecretApi {
      * @throws error if no secret defined or connection/request fails
      */
     public async shareLink(secret: string, options?: ApiOptionsShare): Promise<string> {
+        console.warn("shareLink is deprecated and will be removed in version 2 of the library.");
         const response: ApiResponseShare = await this.share(secret, options);
 
-        return this.createSecretUrl(response.secret_key);
+        return response.share_link;
     }
 
     /**
@@ -257,7 +269,15 @@ class OneTimeSecretApi {
             this.apiVersion,
             init);
 
-        return await request.send();
+        const response = await request.send();
+
+        const shareLink: string = this.createSecretUrl(
+            response.secret_key);
+
+        return {
+            share_link: shareLink,
+            ...response,
+        };
     }
 
     /**
@@ -315,7 +335,19 @@ class OneTimeSecretApi {
             this.apiVersion,
             init);
 
-        return await request.send();
+        const response = await request.send();
+
+        if (isUndefined(response.secret_key)) {
+            return response;
+        } else {
+            const shareLink: string = this.createSecretUrl(
+                response.secret_key);
+
+            return {
+                share_link: shareLink,
+                ...response,
+            };
+        }
     }
 
     /**
