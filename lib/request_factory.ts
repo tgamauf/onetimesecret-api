@@ -1,10 +1,34 @@
 /**
  * Module provides functionality to provide API requests.
  */
+
+
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var apiV1 = require("./api_v1");
-var REQUEST_CONFIG = {
+
+import * as apiV1 from "./api_v1";
+import {ApiRequest, ApiRequestInit} from "./request";
+
+
+type RequestType = (
+    "status" |
+    "share" |
+    "generate" |
+    "retrieve_secret" |
+    "retrieve_metadata" |
+    "burn" |
+    "recent_metadata");
+
+type ApiVersion = "v1";
+
+type ApiVersionEntries = {
+    [key in ApiVersion]: typeof ApiRequest;
+};
+
+type RequestConfig = {
+    [key in RequestType]: ApiVersionEntries;
+};
+
+const REQUEST_CONFIG: RequestConfig = {
     burn: {
         v1: apiV1.ApiRequestBurn,
     },
@@ -27,6 +51,7 @@ var REQUEST_CONFIG = {
         v1: apiV1.ApiRequestStatus,
     },
 };
+
 /**
  * Create an API request object of given type using the given init parameter
  * for the provided API version, if provided.
@@ -38,8 +63,15 @@ var REQUEST_CONFIG = {
  *
  * @returns request object of specified type
  */
-function createApiRequest(requestType, apiVersion, init) {
+function createApiRequest(
+        requestType: RequestType,
+        apiVersion: ApiVersion,
+        init: ApiRequestInit): any {
     return new REQUEST_CONFIG[requestType][apiVersion](init);
 }
-exports.createApiRequest = createApiRequest;
-//# sourceMappingURL=request_factory.js.map
+
+export {
+    RequestType,
+    ApiVersion,
+    createApiRequest
+};

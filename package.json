@@ -2,7 +2,7 @@
   "name": "onetimesecret-api",
   "version": "1.0.2",
   "description": "node.js module for the OneTimeSecret API",
-  "main": "index.js",
+  "main": "index.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/tgamauf/onetimesecret-api.git"
@@ -10,7 +10,8 @@
   "keywords": [
     "onetimesecret",
     "api",
-    "promises"
+    "async",
+    "promise"
   ],
   "author": {
     "name": "Thomas Gamauf"
@@ -32,7 +33,24 @@
     "test": "jest"
   },
   "devDependencies": {
-    "eslint": ">=5.0.0",
-    "jest": ">=22.0.0"
+    "@types/jest": "^23.3.2",
+    "@types/node": "^10.10.1",
+    "@types/node-fetch": "^2.1.2",
+    "jest": ">=22.0.0",
+    "ts-jest": "^23.10.1",
+    "ts-lint": "^4.5.1",
+    "typescript": "^3.0.3",
+    "typescript-eslint-parser": "^18.0.0"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "\\.(ts|tsx)$": "ts-jest"
+    },
+    "testRegex": "/__tests__/.*\\.(ts|tsx|js)$"
   }
 }
