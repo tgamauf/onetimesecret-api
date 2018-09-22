@@ -2,7 +2,6 @@
  * API version 1 implementation.
  */
 
-
 "use strict";
 
 import {isUndefined} from "util";
@@ -64,7 +63,6 @@ class ApiRequestStatus extends ApiRequest {
      *
      * @constructor
      * @augments ApiRequest
-     *
      */
     constructor(init: ApiRequestInit) {
         super(init);

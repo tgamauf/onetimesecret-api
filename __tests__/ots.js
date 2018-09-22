@@ -41,6 +41,19 @@ var index_1 = require("../index");
 // The username, apiKey, url, version, ... can have special meaning
 // The meaning is defined in the node-fetch mock
 // Test status and all general behaviors
+test("missing credentials", function () { return __awaiter(_this, void 0, void 0, function () {
+    var ots;
+    return __generator(this, function (_a) {
+        expect.assertions(1);
+        try {
+            ots = new index_1.OneTimeSecretApi(undefined, undefined);
+        }
+        catch (e) {
+            expect(e.message).toEqual("No username or password provided");
+        }
+        return [2 /*return*/];
+    });
+}); });
 test("server status is ok", function () { return __awaiter(_this, void 0, void 0, function () {
     var ots, response;
     return __generator(this, function (_a) {
@@ -71,7 +84,7 @@ test("server status is not ok", function () { return __awaiter(_this, void 0, vo
         }
     });
 }); });
-test("invalid credentials", function () { return __awaiter(_this, void 0, void 0, function () {
+test("status invalid credentials", function () { return __awaiter(_this, void 0, void 0, function () {
     var ots, e_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -87,13 +100,13 @@ test("invalid credentials", function () { return __awaiter(_this, void 0, void 0
                 return [3 /*break*/, 4];
             case 3:
                 e_1 = _a.sent();
-                expect(e_1.message).toEqual("url=\"ok_url/api/v1/status\", status=404, message=\"not authorized\"");
+                expect(e_1.message).toEqual("Request not authorized");
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
     });
 }); });
-test("invalid request", function () { return __awaiter(_this, void 0, void 0, function () {
+test("status invalid request", function () { return __awaiter(_this, void 0, void 0, function () {
     var ots, e_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -115,7 +128,7 @@ test("invalid request", function () { return __awaiter(_this, void 0, void 0, fu
         }
     });
 }); });
-test("server error", function () { return __awaiter(_this, void 0, void 0, function () {
+test("status server error", function () { return __awaiter(_this, void 0, void 0, function () {
     var ots, e_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -165,6 +178,28 @@ test("share with optional parameters ok", function () { return __awaiter(_this, 
                 response = _a.sent();
                 expect(response.secret_key).toEqual("test");
                 return [2 /*return*/];
+        }
+    });
+}); });
+test("share missing secret", function () { return __awaiter(_this, void 0, void 0, function () {
+    var ots, e_4;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                expect.assertions(1);
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                ots = new index_1.OneTimeSecretApi("ok_user", "ok_api_key");
+                return [4 /*yield*/, ots.share(undefined)];
+            case 2:
+                _a.sent();
+                return [3 /*break*/, 4];
+            case 3:
+                e_4 = _a.sent();
+                expect(e_4.message).toEqual("No secret provided");
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); });
@@ -238,7 +273,7 @@ test("retrieve secret ok", function () { return __awaiter(_this, void 0, void 0,
             case 0:
                 expect.assertions(1);
                 ots = new index_1.OneTimeSecretApi("ok_user", "ok_api_key", { url: "ok_url" });
-                return [4 /*yield*/, ots.retrieve_secret("mykey")];
+                return [4 /*yield*/, ots.retrieve_secret("secretKey")];
             case 1:
                 response = _a.sent();
                 expect(response.value).toEqual("secret");
@@ -253,11 +288,55 @@ test("retrieve secret with password ok", function () { return __awaiter(_this, v
             case 0:
                 expect.assertions(1);
                 ots = new index_1.OneTimeSecretApi("ok_user", "ok_api_key", { url: "ok_url" });
-                return [4 /*yield*/, ots.retrieve_secret("mykey", { passphrase: "yes" })];
+                return [4 /*yield*/, ots.retrieve_secret("secretKey", { passphrase: "yes" })];
             case 1:
                 response = _a.sent();
                 expect(response.value).toEqual("secret");
                 return [2 /*return*/];
+        }
+    });
+}); });
+test("retrieve secret missing secret key", function () { return __awaiter(_this, void 0, void 0, function () {
+    var ots, e_5;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                expect.assertions(1);
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                ots = new index_1.OneTimeSecretApi("ok_user", "ok_api_key");
+                return [4 /*yield*/, ots.retrieve_secret(undefined)];
+            case 2:
+                _a.sent();
+                return [3 /*break*/, 4];
+            case 3:
+                e_5 = _a.sent();
+                expect(e_5.message).toEqual("No secret_key provided");
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
+test("retrieve secret unknown secret key", function () { return __awaiter(_this, void 0, void 0, function () {
+    var ots, e_6;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                expect.assertions(1);
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                ots = new index_1.OneTimeSecretApi("ok_user", "ok_api_key", { url: "ok_url" });
+                return [4 /*yield*/, ots.retrieve_secret("unknownKey")];
+            case 2:
+                _a.sent();
+                return [3 /*break*/, 4];
+            case 3:
+                e_6 = _a.sent();
+                expect(e_6.message).toEqual("Unknown secret");
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); });
@@ -277,6 +356,28 @@ test("retrieve metadata ok", function () { return __awaiter(_this, void 0, void 
         }
     });
 }); });
+test("retrieve metadata missing metadata key", function () { return __awaiter(_this, void 0, void 0, function () {
+    var ots, e_7;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                expect.assertions(1);
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                ots = new index_1.OneTimeSecretApi("ok_user", "ok_api_key");
+                return [4 /*yield*/, ots.retrieve_metadata(undefined)];
+            case 2:
+                _a.sent();
+                return [3 /*break*/, 4];
+            case 3:
+                e_7 = _a.sent();
+                expect(e_7.message).toEqual("No metadata_key provided");
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
 // Test burn secret
 test("burn secret ok", function () { return __awaiter(_this, void 0, void 0, function () {
     var ots, response;
@@ -290,6 +391,28 @@ test("burn secret ok", function () { return __awaiter(_this, void 0, void 0, fun
                 response = _a.sent();
                 expect(response.state).toEqual("burned");
                 return [2 /*return*/];
+        }
+    });
+}); });
+test("burn missing metadata key", function () { return __awaiter(_this, void 0, void 0, function () {
+    var ots, e_8;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                expect.assertions(1);
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                ots = new index_1.OneTimeSecretApi("ok_user", "ok_api_key");
+                return [4 /*yield*/, ots.burn(undefined)];
+            case 2:
+                _a.sent();
+                return [3 /*break*/, 4];
+            case 3:
+                e_8 = _a.sent();
+                expect(e_8.message).toEqual("No metadata_key provided");
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); });

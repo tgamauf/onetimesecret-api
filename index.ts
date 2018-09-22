@@ -10,10 +10,24 @@ import {
     ApiResponseShare,
     ApiResponseState,
     ApiVersion,
+    ConfigError,
     OneTimeSecretApi,
 } from "./lib/ots";
+import {
+    NotAuthorizedError,
+    NotFoundError,
+    RateLimitedError,
+    TimeoutError,
+    UnknownSecretError,
+} from "./lib/request";
 
 export {
+    TimeoutError,
+    UnknownSecretError,
+    NotFoundError,
+    NotAuthorizedError,
+    RateLimitedError,
+    ConfigError,
     ApiVersion,
     ApiResponseState,
     ApiOptionsShare,
@@ -28,5 +42,4 @@ export {
     OneTimeSecretApi
 };
 export default OneTimeSecretApi;
-
 
