@@ -46,7 +46,7 @@ test("status invalid request", async () => {
         await ots.status();
     } catch (e) {
         expect(e.message).toEqual(
-            "url=\"error_400_url/api/v1/status\", status=400, message=\"not found\"",
+            "Path not found",
         );
     }
 });

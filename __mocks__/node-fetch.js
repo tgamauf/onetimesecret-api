@@ -125,7 +125,7 @@ var RESPONSE_ERROR_NOT_AUTH = new Response({ message: "Not authorized" }, {
 var RESPONSE_ERROR_400 = new Response(null, {
     ok: false,
     status: 400,
-    statusText: "not found",
+    statusText: "Not Found",
     headers: ERROR_RESPONSE_HEADER
 });
 var RESPONSE_ERROR_500 = new Response(null, {

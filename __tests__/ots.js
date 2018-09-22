@@ -122,7 +122,7 @@ test("status invalid request", function () { return __awaiter(_this, void 0, voi
                 return [3 /*break*/, 4];
             case 3:
                 e_2 = _a.sent();
-                expect(e_2.message).toEqual("url=\"error_400_url/api/v1/status\", status=400, message=\"not found\"");
+                expect(e_2.message).toEqual("Path not found");
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }

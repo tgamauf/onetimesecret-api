@@ -239,9 +239,18 @@ class ApiRequest {
                     throw error;
                 });
             } else {
-                throw new Error(
-                    `url="${url}", status=${response.status}, `
-                    + `message="${response.statusText}"`);
+                let error: Error = null;
+                switch(response.statusText) {
+                    case "Not Found":
+                        error = new NotFoundError("Path not found");
+                        break;
+                    default:
+                        error = new Error(
+                            `url="${url}", status=${response.status}, `
+                            + `message="${response.statusText}"`);
+                }
+
+                throw error;
             }
         }
 

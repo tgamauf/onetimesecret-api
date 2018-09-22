@@ -140,7 +140,7 @@ const RESPONSE_ERROR_400 = new Response(
     {
         ok: false,
         status: 400,
-        statusText: "not found",
+        statusText: "Not Found",
         headers: ERROR_RESPONSE_HEADER
     });
 const RESPONSE_ERROR_500 = new Response(

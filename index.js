@@ -1,5 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var node_fetch_1 = require("node-fetch");
+exports.FetchError = node_fetch_1.FetchError;
 var ots_1 = require("./lib/ots");
 exports.ConfigError = ots_1.ConfigError;
 exports.OneTimeSecretApi = ots_1.OneTimeSecretApi;

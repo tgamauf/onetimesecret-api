@@ -1,3 +1,4 @@
+import {FetchError} from "node-fetch";
 import {
     ApiOptionsGenerate,
     ApiOptionsRetrieveSecret,
@@ -22,6 +23,7 @@ import {
 } from "./lib/request";
 
 export {
+    FetchError,
     TimeoutError,
     UnknownSecretError,
     NotFoundError,
