@@ -42,4 +42,3 @@ export {
     OneTimeSecretApi
 };
 export default OneTimeSecretApi;
-

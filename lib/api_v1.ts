@@ -72,7 +72,7 @@ class ApiRequestStatus extends ApiRequest {
     }
 
     /**
-     * Process the api request.
+     * Convert server status to boolean.
      *
      * @param response object received from the request
      * @returns true if server is available

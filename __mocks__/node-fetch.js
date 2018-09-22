@@ -68,7 +68,7 @@ var REQUESTS = [
         METHOD: "POST",
         BODY: new RegExp("(?:^passphrase=\\w+&ttl=\\d+&recipient=\\w+$)"),
         BODY_REQUIRED: false,
-        RESPONSE: new Response({ value: "generated" }, { ok: true, status: 200 })
+        RESPONSE: new Response({ secret_key: "generated" }, { ok: true, status: 200 })
     },
     {
         // retrieve secret
@@ -80,7 +80,7 @@ var REQUESTS = [
     },
     {
         // retrieve secret unknown key
-        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, "secret", "unknownKey"].join('/')),
+        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, "secret", "unknownKey"].join("/")),
         METHOD: "POST",
         BODY: new RegExp("^passphrase=\\w+$"),
         BODY_REQUIRED: false,
@@ -92,6 +92,13 @@ var REQUESTS = [
         METHOD: "POST",
         BODY: null,
         RESPONSE: new Response({ secret_key: "secret" }, { ok: true, status: 200 })
+    },
+    {
+        // retrieve metadata burned secret
+        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, 'private', 'myBurnedKey'].join('/')),
+        METHOD: 'POST',
+        BODY: null,
+        RESPONSE: new Response({ metadata_key: 'metadata' }, { ok: true, status: 200 })
     },
     {
         // burn
