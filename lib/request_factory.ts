@@ -3,56 +3,53 @@
  */
 
 
-'use strict';
+"use strict";
 
-import * as apiV1 from './api_v1';
+import * as apiV1 from "./api_v1";
 import {ApiRequest, ApiRequestInit} from "./request";
 
 
 type RequestType = (
-    'status' |
-    'share' |
-    'generate' |
-    'retrieve_secret' |
-    'retrieve_metadata' |
-    'burn' |
-    'recent_metadata');
+    "status" |
+    "share" |
+    "generate" |
+    "retrieve_secret" |
+    "retrieve_metadata" |
+    "burn" |
+    "recent_metadata");
 
-type ApiVersion = 'v1';
+type ApiVersion = "v1";
 
-// TODO remove if not used
 type ApiVersionEntries = {
-    [key in ApiVersion]: ApiRequest;
+    [key in ApiVersion]: typeof ApiRequest;
 };
+
 type RequestConfig = {
     [key in RequestType]: ApiVersionEntries;
-}
+};
 
-const API_VERSIONS: string[] = [ 'v1' ];
-
-// TODO this should be of type RequestConfig, but it complains about derived classes not having path
-const REQUEST_CONFIG: object = {
-    status: {
-        v1: apiV1.ApiRequestStatus
-    },
-    share: {
-        v1: apiV1.ApiRequestShare
+const REQUEST_CONFIG: RequestConfig = {
+    burn: {
+        v1: apiV1.ApiRequestBurn,
     },
     generate: {
-        v1: apiV1.ApiRequestGenerate
-    },
-    retrieve_secret: {
-        v1: apiV1.ApiRequestRetrieveSecret
-    },
-    retrieve_metadata: {
-        v1: apiV1.ApiRequestRetrieveMetadata
-    },
-    burn: {
-        v1: apiV1.ApiRequestBurn
+        v1: apiV1.ApiRequestGenerate,
     },
     recent_metadata: {
-        v1: apiV1.ApiRequestRecentMetadata
-    }
+        v1: apiV1.ApiRequestRecentMetadata,
+    },
+    retrieve_metadata: {
+        v1: apiV1.ApiRequestRetrieveMetadata,
+    },
+    retrieve_secret: {
+        v1: apiV1.ApiRequestRetrieveSecret,
+    },
+    share: {
+        v1: apiV1.ApiRequestShare,
+    },
+    status: {
+        v1: apiV1.ApiRequestStatus,
+    },
 };
 
 /**

@@ -1,16 +1,16 @@
 import {
-    ApiVersion,
-    ApiResponseState,
-    ApiOptionsShare,
-    ApiResponseShare,
     ApiOptionsGenerate,
-    ApiResponseGenerate,
     ApiOptionsRetrieveSecret,
-    ApiResponseRetrieveSecret,
-    ApiResponseRetrieveMetadata,
+    ApiOptionsShare,
     ApiResponseBurn,
+    ApiResponseGenerate,
     ApiResponseRecentMetadata,
-    OneTimeSecretApi
+    ApiResponseRetrieveMetadata,
+    ApiResponseRetrieveSecret,
+    ApiResponseShare,
+    ApiResponseState,
+    ApiVersion,
+    OneTimeSecretApi,
 } from "./lib/ots";
 
 export {

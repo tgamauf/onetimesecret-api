@@ -3,57 +3,57 @@
  */
 
 
-'use strict';
+"use strict";
 
 import {isUndefined} from "util";
-import {ApiRequestInit, ApiRequest, urlEncodeDict} from "./request";
+import {ApiRequest, ApiRequestInit, urlEncodeDict} from "./request";
 
 
 interface StatusObject extends Object {
-    status: string
+    status: string;
 }
 
 interface ShareInit extends ApiRequestInit {
-    secret: string,
-    passphrase?: string,
-    ttl?: number,
-    recipient?: string
+    secret: string;
+    passphrase?: string;
+    ttl?: number;
+    recipient?: string;
 }
 
 interface ShareBody {
-    secret: string,
-    passphrase?: string,
-    ttl?: number,
-    recipient?: string
+    secret: string;
+    passphrase?: string;
+    ttl?: number;
+    recipient?: string;
 }
 
 interface GenerateInit extends ApiRequestInit {
-    passphrase?: string,
-    ttl?: number,
-    recipient?: string
+    passphrase?: string;
+    ttl?: number;
+    recipient?: string;
 }
 
 interface GenerateBody {
-    passphrase?: string,
-    ttl?: number,
-    recipient?: string
+    passphrase?: string;
+    ttl?: number;
+    recipient?: string;
 }
 
 interface RetrieveSecretInit extends ApiRequestInit {
-    secret_key: string
-    passphrase?: string,
+    secretKey: string;
+    passphrase?: string;
 }
 
 interface RetrieveSecretBody {
-    passphrase?: string
+    passphrase?: string;
 }
 
 interface RetrieveMetadataInit extends ApiRequestInit {
-    metadata_key: string
+    metadataKey: string;
 }
 
 interface BurnInit extends ApiRequestInit {
-    metadata_key: string
+    metadataKey: string;
 }
 
 
@@ -64,12 +64,13 @@ class ApiRequestStatus extends ApiRequest {
      *
      * @constructor
      * @augments ApiRequest
-     * */
+     *
+     */
     constructor(init: ApiRequestInit) {
         super(init);
 
-        this.path = 'status';
-        this.method = 'GET';
+        this.path = "status";
+        this.method = "GET";
     }
 
     /**
@@ -80,7 +81,7 @@ class ApiRequestStatus extends ApiRequest {
      */
     protected process(response: StatusObject): boolean {
         let isAvailable: boolean = false;
-        if (response.status === 'nominal') {
+        if (response.status === "nominal") {
             isAvailable = true;
         }
 
@@ -95,7 +96,7 @@ class ApiRequestShare extends ApiRequest {
      *
      * @constructor
      * @augments ApiRequest
-     * */
+     */
     constructor(init: ShareInit) {
         super(init);
 
@@ -110,8 +111,8 @@ class ApiRequestShare extends ApiRequest {
             body.recipient = init.recipient;
         }
 
-        this.path = 'share';
-        this.method = 'POST';
+        this.path = "share";
+        this.method = "POST";
         this.body = urlEncodeDict(body);
     }
 }
@@ -122,7 +123,7 @@ class ApiRequestGenerate extends ApiRequest {
      *
      * @constructor
      * @augments ApiRequest
-     * */
+     */
     constructor(init: GenerateInit) {
         super(init);
 
@@ -137,8 +138,8 @@ class ApiRequestGenerate extends ApiRequest {
             body.recipient = init.recipient;
         }
 
-        this.path = 'generate';
-        this.method = 'POST';
+        this.path = "generate";
+        this.method = "POST";
         if (Object.keys(body).length > 0) {
             this.body = urlEncodeDict(body);
         }
@@ -152,7 +153,7 @@ class ApiRequestRetrieveSecret extends ApiRequest {
      *
      * @constructor
      * @augments ApiRequest
-     * */
+     */
     constructor(init: RetrieveSecretInit) {
         super(init);
 
@@ -161,8 +162,8 @@ class ApiRequestRetrieveSecret extends ApiRequest {
             body.passphrase = init.passphrase;
         }
 
-        this.path = ['secret', init.secret_key].join('/');
-        this.method = 'POST';
+        this.path = ["secret", init.secretKey].join("/");
+        this.method = "POST";
         if (Object.keys(body).length > 0) {
             this.body = urlEncodeDict(body);
         }
@@ -180,8 +181,8 @@ class ApiRequestRetrieveMetadata extends ApiRequest {
     constructor(init: RetrieveMetadataInit) {
         super(init);
 
-        this.path = ['private', init.metadata_key].join('/');
-        this.method = 'POST';
+        this.path = ["private", init.metadataKey].join("/");
+        this.method = "POST";
     }
 }
 
@@ -196,8 +197,8 @@ class ApiRequestBurn extends ApiRequest {
     constructor(init: BurnInit) {
         super(init);
 
-        this.path = ['private', init.metadata_key, 'burn'].join('/');
-        this.method = 'POST';
+        this.path = ["private", init.metadataKey, "burn"].join("/");
+        this.method = "POST";
     }
 }
 
@@ -212,8 +213,8 @@ class ApiRequestRecentMetadata extends ApiRequest {
     constructor(init: ApiRequestInit) {
         super(init);
 
-        this.path = 'private/recent';
-        this.method = 'GET';
+        this.path = "private/recent";
+        this.method = "GET";
     }
 }
 

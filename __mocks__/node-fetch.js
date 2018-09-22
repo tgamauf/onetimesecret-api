@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var buffer_1 = require("buffer");
-var OK_USER = 'ok_user';
-var OK_API_KEY = 'ok_api_key';
-var OK_API_VERSION = 'v1';
-var OK_URL = 'ok_url';
-var STATUS_OFFLINE_URL = 'status_offline_url';
-var ERROR_400_URL = 'error_400_url';
-var ERROR_500_URL = 'error_500_url';
-var OK_AUTH = 'Basic ' + buffer_1.Buffer.from(OK_USER + ':' + OK_API_KEY).toString('base64');
-var OK_ACCEPT = 'application/json';
-var OK_CONTENT_TYPE = 'application/x-www-form-urlencoded';
+var OK_USER = "ok_user";
+var OK_API_KEY = "ok_api_key";
+var OK_API_VERSION = "v1";
+var OK_URL = "ok_url";
+var STATUS_OFFLINE_URL = "status_offline_url";
+var ERROR_400_URL = "error_400_url";
+var ERROR_500_URL = "error_500_url";
+var OK_AUTH = "Basic " + buffer_1.Buffer.from(OK_USER + ":" + OK_API_KEY).toString("base64");
+var OK_ACCEPT = "application/json";
+var OK_CONTENT_TYPE = "application/x-www-form-urlencoded";
 var Headers = /** @class */ (function () {
     function Headers() {
         this.data = {};
@@ -41,82 +41,82 @@ var Response = /** @class */ (function () {
     return Response;
 }());
 exports.Response = Response;
-var BASE_PATH_REGEX = "" + [OK_URL, 'api', OK_API_VERSION].join('/');
+var BASE_PATH_REGEX = "" + [OK_URL, "api", OK_API_VERSION].join("/");
 var REQUESTS = [
     {
         // status
-        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, 'status'].join('/')),
-        METHOD: 'GET',
+        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, "status"].join("/")),
+        METHOD: "GET",
         BODY: null,
-        RESPONSE: new Response({ status: 'nominal' }, { ok: true, status: 200 })
+        RESPONSE: new Response({ status: "nominal" }, { ok: true, status: 200 })
     },
     {
         // share
-        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, 'share'].join('/')),
-        METHOD: 'POST',
-        BODY: new RegExp('(?:^secret=\\w+$)|(?:^secret=\\w+&passphrase=\\w+&ttl=\\d+&recipient=\\w+$)'),
+        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, "share"].join("/")),
+        METHOD: "POST",
+        BODY: new RegExp("(?:^secret=\\w+$)|(?:^secret=\\w+&passphrase=\\w+&ttl=\\d+&recipient=\\w+$)"),
         BODY_REQUIRED: true,
-        RESPONSE: new Response({ secret_key: 'test' }, { ok: true, status: 200 })
+        RESPONSE: new Response({ secret_key: "test" }, { ok: true, status: 200 })
     },
     {
         // generate
-        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, 'generate'].join('/')),
-        METHOD: 'POST',
-        BODY: new RegExp('(?:^passphrase=\\w+&ttl=\\d+&recipient=\\w+$)'),
+        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, "generate"].join("/")),
+        METHOD: "POST",
+        BODY: new RegExp("(?:^passphrase=\\w+&ttl=\\d+&recipient=\\w+$)"),
         BODY_REQUIRED: false,
-        RESPONSE: new Response({ value: 'generated' }, { ok: true, status: 200 })
+        RESPONSE: new Response({ value: "generated" }, { ok: true, status: 200 })
     },
     {
         // retrieve secret
-        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, 'secret', '\\w+$'].join('/')),
-        METHOD: 'POST',
-        BODY: new RegExp('^passphrase=\\w+$'),
+        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, "secret", "\\w+$"].join("/")),
+        METHOD: "POST",
+        BODY: new RegExp("^passphrase=\\w+$"),
         BODY_REQUIRED: false,
-        RESPONSE: new Response({ value: 'secret' }, { ok: true, status: 200 })
+        RESPONSE: new Response({ value: "secret" }, { ok: true, status: 200 })
     },
     {
         // retrieve metadata
-        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, 'private', 'mykey'].join('/')),
-        METHOD: 'POST',
+        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, "private", "mykey"].join("/")),
+        METHOD: "POST",
         BODY: null,
-        RESPONSE: new Response({ secret_key: 'secret' }, { ok: true, status: 200 })
+        RESPONSE: new Response({ secret_key: "secret" }, { ok: true, status: 200 })
     },
     {
         // burn
-        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, 'private', 'burnKey', 'burn'].join('/')),
-        METHOD: 'POST',
+        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, "private", "burnKey", "burn"].join("/")),
+        METHOD: "POST",
         BODY: null,
-        RESPONSE: new Response({ state: 'burned' }, { ok: true, status: 200 })
+        RESPONSE: new Response({ state: "burned" }, { ok: true, status: 200 })
     },
     {
         // recent
-        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, 'private', 'recent'].join('/')),
-        METHOD: 'GET',
+        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, "private", "recent"].join("/")),
+        METHOD: "GET",
         BODY: null,
         RESPONSE: new Response([{ metadata_key: 0 }], { ok: true, status: 200 })
     },
 ];
-var RESPONSE_SERVER_OFFLINE = new Response({ status: 'offline' }, { ok: true, status: 200 });
+var RESPONSE_SERVER_OFFLINE = new Response({ status: "offline" }, { ok: true, status: 200 });
 var ERROR_RESPONSE_HEADER = new Headers();
-ERROR_RESPONSE_HEADER.append('Content-Type', 'text/plain');
+ERROR_RESPONSE_HEADER.append("Content-Type", "text/plain");
 var ERROR_RESPONSE_HEADER_JSON = new Headers();
-ERROR_RESPONSE_HEADER_JSON.append('Content-Type', 'application/json');
+ERROR_RESPONSE_HEADER_JSON.append("Content-Type", "application/json");
 var RESPONSE_ERROR_NOT_AUTH = new Response({ message: 'not authorized' }, {
     ok: false,
     status: 404,
-    statusText: '404 json error',
+    statusText: "404 json error",
     headers: ERROR_RESPONSE_HEADER_JSON
 });
 var RESPONSE_ERROR_400 = new Response(null, {
     ok: false,
     status: 400,
-    statusText: 'not found',
+    statusText: "not found",
     headers: ERROR_RESPONSE_HEADER
 });
 var RESPONSE_ERROR_500 = new Response(null, {
     ok: false,
     status: 500,
-    statusText: 'internal server error',
+    statusText: "internal server error",
     headers: ERROR_RESPONSE_HEADER
 });
 function fetch(url, init) {
@@ -138,18 +138,18 @@ function fetch(url, init) {
             else if (url.indexOf(ERROR_500_URL) !== -1) {
                 resolve(RESPONSE_ERROR_500);
             }
-            reject(new Error('url not found'));
+            reject(new Error("url not found"));
         }
         if (init.method !== request.METHOD) {
             resolve(RESPONSE_ERROR_400);
         }
-        if (init.headers.get('Authorization') !== OK_AUTH) {
+        if (init.headers.get("Authorization") !== OK_AUTH) {
             resolve(RESPONSE_ERROR_NOT_AUTH);
         }
-        if (init.headers.get('Accept') !== OK_ACCEPT) {
+        if (init.headers.get("Accept") !== OK_ACCEPT) {
             resolve(RESPONSE_ERROR_400);
         }
-        if (init.headers.get('Content-Type') !== OK_CONTENT_TYPE) {
+        if (init.headers.get("Content-Type") !== OK_CONTENT_TYPE) {
             resolve(RESPONSE_ERROR_400);
         }
         if (request.BODY) {

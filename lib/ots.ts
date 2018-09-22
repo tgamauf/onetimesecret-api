@@ -3,56 +3,56 @@
  */
 
 
-'use strict';
+"use strict";
 
 import {ApiRequest} from "./request";
 import {ApiVersion, createApiRequest} from "./request_factory";
 
 
 interface ApiInit {
-    username: string,
-    password: string,
-    apiVersion: ApiVersion,
-    url: string,
-    port?: number
+    username: string;
+    password: string;
+    apiVersion: ApiVersion;
+    url: string;
+    port?: number;
 }
 
 interface ApiOptions {
-    apiVersion?: ApiVersion
-    url?: string,
-    port?: number,
+    apiVersion?: ApiVersion;
+    url?: string;
+    port?: number;
 }
 
 interface ApiDefaultOptions {
-    apiVersion: ApiVersion
-    url: string,
-    port?: number,
+    apiVersion: ApiVersion;
+    url: string;
+    port?: number;
 }
 
-type ApiResponseState = 'new' | 'received' | 'burned' | 'viewed';
+type ApiResponseState = "new" | "received" | "burned" | "viewed";
 
 interface ApiOptionsShare {
-    passphrase?: string,
-    ttl?: number,
-    recipient?: string
+    passphrase?: string;
+    ttl?: number;
+    recipient?: string;
 }
 
 interface ApiInitShare extends ApiInit, ApiOptionsShare {
-    secret: string
+    secret: string;
 }
 
 interface ApiResponseShare {
-    custid: string,
-    metadata_key: string,
-    secret_key: string,
-    ttl: number,
-    metadata_ttl: number,
-    secret_ttl: number,
-    state: ApiResponseState,
-    updated: number,
-    created: number,
-    recipient: string[],
-    passphrase_required: boolean
+    custid: string;
+    metadata_key: string;
+    secret_key: string;
+    ttl: number;
+    metadata_ttl: number;
+    secret_ttl: number;
+    state: ApiResponseState;
+    updated: number;
+    created: number;
+    recipient: string[];
+    passphrase_required: boolean;
 }
 
 interface ApiOptionsGenerate extends ApiOptionsShare {
@@ -62,43 +62,43 @@ interface ApiInitGenerate extends ApiInit, ApiOptionsGenerate {
 }
 
 interface ApiResponseGenerate extends ApiResponseShare {
-    value: string
+    value: string;
 }
 
 interface ApiOptionsRetrieveSecret {
-    passphrase?: string,
+    passphrase?: string;
 }
 
 interface ApiInitRetrieveSecret extends ApiInit, ApiOptionsRetrieveSecret {
-    secret_key: string
+    secretKey: string;
 }
 
 interface ApiResponseRetrieveSecret {
-    value: string,
-    secret_key: string
+    value: string;
+    secret_key: string;
 }
 
 interface ApiInitRetrieveMetadata extends ApiInit {
-    metadata_key: string
+    metadataKey: string;
 }
 
 interface ApiResponseRetrieveMetadata {
-    custid: string,
-    metadata_key: string,
-    ttl: number,
-    metadata_ttl: number,
-    state: ApiResponseState,
-    updated: number,
-    created: number,
-    recipient: string[],
-    secret_key?: string,
-    secret_ttl?: number,
-    received?: number,
-    passphrase_required?: boolean
+    custid: string;
+    metadata_key: string;
+    ttl: number;
+    metadata_ttl: number;
+    state: ApiResponseState;
+    updated: number;
+    created: number;
+    recipient: string[];
+    secret_key?: string;
+    secret_ttl?: number;
+    received?: number;
+    passphrase_required?: boolean;
 }
 
 interface ApiInitBurn extends ApiInit {
-    metadata_key: string
+    metadata_key: string;
 }
 
 interface ApiResponseBurn {
@@ -109,34 +109,34 @@ interface ApiResponseBurn {
         ttl: number,
         metadata_ttl: number,
         secret_ttl: number,
-        state: 'burned',
+        state: "burned",
         updated: number,
         created: number,
-        recipient: string[]
-    },
-    "secret_shortkey": string
+        recipient: string[],
+    };
+    "secret_shortkey": string;
 }
 
 interface ApiResponseRecentMetadata {
-    custid: string,
-    metadata_key: string,
-    ttl: number,
-    metadata_ttl: number,
-    secret_ttl: number,
-    state: ApiResponseState,
-    updated: number,
-    created: number,
-    recipient: string[],
-    received?: number
+    custid: string;
+    metadata_key: string;
+    ttl: number;
+    metadata_ttl: number;
+    secret_ttl: number;
+    state: ApiResponseState;
+    updated: number;
+    created: number;
+    recipient: string[];
+    received?: number;
 }
 
-const DEFAULT_URL: string = 'https://onetimesecret.com';
-const DEFAULT_API_VERSION: ApiVersion = 'v1';
+const DEFAULT_URL: string = "https://onetimesecret.com";
+const DEFAULT_API_VERSION: ApiVersion = "v1";
 
 
 class OneTimeSecretApi {
-    init: ApiInit;
-    apiVersion: ApiVersion;
+    private readonly init: ApiInit;
+    private readonly apiVersion: ApiVersion;
 
     /**
      * Create object for interaction with OTS.
@@ -149,25 +149,19 @@ class OneTimeSecretApi {
                        password: string,
                        options?: ApiOptions) {
         const defaultOptions: ApiDefaultOptions = {
+            apiVersion: DEFAULT_API_VERSION,
             url: DEFAULT_URL,
-            apiVersion: DEFAULT_API_VERSION
         };
 
         this.init = {
-            username: username,
-            password: password,
+            username,
+            password,
             ...defaultOptions,
-            ...options
+            ...options,
         };
 
         // The api version is also required in the request
         this.apiVersion = this.init.apiVersion;
-    }
-
-    private createSecretUrl(secret_key: string): string {
-        /** Create the secret link from the secret. */
-
-        return [this.init.url, 'secret', secret_key].join('/');
     }
 
     /**
@@ -178,7 +172,7 @@ class OneTimeSecretApi {
      */
     public async status(): Promise<boolean> {
         const request: ApiRequest = createApiRequest(
-            'status',
+            "status",
             this.apiVersion,
             this.init);
 
@@ -200,12 +194,12 @@ class OneTimeSecretApi {
                        options?: ApiOptionsShare): Promise<ApiResponseShare> {
         const init: ApiInitShare = {
             ...JSON.parse(JSON.stringify(this.init)),
-            secret: secret,
-            ...options
+            secret,
+            ...options,
         };
 
         const request: ApiRequest = createApiRequest(
-            'share',
+            "share",
             this.apiVersion,
             init);
 
@@ -221,7 +215,7 @@ class OneTimeSecretApi {
      * @returns promise that returns response object
      * @throws error if no secret defined or connection/request fails
      */
-    async shareLink(secret: string, options?: ApiOptionsShare): Promise<string> {
+    public async shareLink(secret: string, options?: ApiOptionsShare): Promise<string> {
         const response: ApiResponseShare = await this.share(secret, options);
 
         return this.createSecretUrl(response.secret_key);
@@ -236,14 +230,14 @@ class OneTimeSecretApi {
      * @returns that returns response object
      * @throws error if connection/request fails
      */
-    async generate(options?: ApiOptionsShare): Promise<ApiResponseGenerate> {
+    public async generate(options?: ApiOptionsShare): Promise<ApiResponseGenerate> {
         const init: ApiInitGenerate = {
             ...JSON.parse(JSON.stringify(this.init)),
-            ...options
+            ...options,
         };
 
         const request: ApiRequest = createApiRequest(
-            'generate',
+            "generate",
             this.apiVersion,
             init);
 
@@ -255,22 +249,22 @@ class OneTimeSecretApi {
      * Please check the API description for the other available keys:
      * https://onetimesecret.com/docs/api/secrets
      *
-     * @param secret_key secret key of the secret
+     * @param secretKey secret key of the secret
      * @param options optional parameters
      * @returns that returns response object
      * @throws error if no secret key defined or connection/request fails
      */
-    async retrieve_secret(
-            secret_key: string,
-            options?: ApiOptionsRetrieveSecret): Promise<ApiResponseRetrieveSecret> {
+    public async retrieve_secret(
+        secretKey: string,
+        options?: ApiOptionsRetrieveSecret): Promise<ApiResponseRetrieveSecret> {
         const init: ApiInitRetrieveSecret = {
             ...JSON.parse(JSON.stringify(this.init)),
-            secret_key: secret_key,
-            ...options
+            secretKey,
+            ...options,
         };
 
         const request: ApiRequest = createApiRequest(
-            'retrieve_secret',
+            "retrieve_secret",
             this.apiVersion,
             init);
 
@@ -282,20 +276,20 @@ class OneTimeSecretApi {
      * Please check the API description for the other available keys:
      * https://onetimesecret.com/docs/api/secrets
      *
-     * @param metadata_key: private, unique key of the secret used for secret
+     * @param metadataKey: private, unique key of the secret used for secret
      *      management
      * @returns promise that returns response object
      * @throws error if no metadata key defined or connection/request fails
      */
-    async retrieve_metadata(
-        metadata_key: string): Promise<ApiResponseRetrieveMetadata> {
+    public async retrieve_metadata(
+        metadataKey: string): Promise<ApiResponseRetrieveMetadata> {
         const init: ApiInitRetrieveMetadata = {
             ...JSON.parse(JSON.stringify(this.init)),
-            metadata_key: metadata_key
+            metadataKey,
         };
 
         const request: ApiRequest = createApiRequest(
-            'retrieve_metadata',
+            "retrieve_metadata",
             this.apiVersion,
             init);
 
@@ -307,19 +301,19 @@ class OneTimeSecretApi {
      * Please check the API description for the other available keys:
      * https://onetimesecret.com/docs/api/secrets
      *
-     * @param metadata_key private, unique key of the secret used for secret
+     * @param metadataKey private, unique key of the secret used for secret
      *      management
      * @returns promise that returns response object
      * @throws error if no metadata key defined or connection/request fails
      */
-    async burn(metadata_key: string): Promise<ApiResponseBurn> {
+    public async burn(metadataKey: string): Promise<ApiResponseBurn> {
         const init: ApiInitBurn = {
             ...JSON.parse(JSON.stringify(this.init)),
-            metadata_key: metadata_key
+            metadataKey,
         };
 
         const request: ApiRequest = createApiRequest(
-            'burn',
+            "burn",
             this.apiVersion,
             init);
 
@@ -334,13 +328,19 @@ class OneTimeSecretApi {
      * @returns promise that returns response object
      * @throws error if connection/request fails
      */
-    async recent_metadata(): Promise<ApiResponseRecentMetadata[]> {
+    public async recent_metadata(): Promise<ApiResponseRecentMetadata[]> {
         const request: ApiRequest = createApiRequest(
-            'recent_metadata',
+            "recent_metadata",
             this.apiVersion,
             this.init);
 
         return await request.send();
+    }
+
+    private createSecretUrl(secretKey: string): string {
+        /** Create the secret link from the secret. */
+
+        return [this.init.url, "secret", secretKey].join("/");
     }
 }
 

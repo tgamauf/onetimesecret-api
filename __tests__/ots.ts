@@ -27,7 +27,7 @@ test("invalid credentials", async () => {
         await ots.status();
     } catch (e) {
         expect(e.message).toEqual(
-            "url='ok_url/api/v1/status', status=404, message='not authorized'"
+            "url=\"ok_url/api/v1/status\", status=404, message=\"not authorized\"",
         );
     }
 });
@@ -39,7 +39,7 @@ test("invalid request", async () => {
         await ots.status();
     } catch (e) {
         expect(e.message).toEqual(
-            "url='error_400_url/api/v1/status', status=400, message='not found'"
+            "url=\"error_400_url/api/v1/status\", status=400, message=\"not found\"",
         );
     }
 });
@@ -51,7 +51,7 @@ test("server error", async () => {
         await ots.status();
     } catch (e) {
         expect(e.message).toEqual(
-            "url='error_500_url/api/v1/status', status=500, message='internal server error'"
+            "url=\"error_500_url/api/v1/status\", status=500, message=\"internal server error\"",
         );
     }
 });

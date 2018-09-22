@@ -87,7 +87,7 @@ test("invalid credentials", function () { return __awaiter(_this, void 0, void 0
                 return [3 /*break*/, 4];
             case 3:
                 e_1 = _a.sent();
-                expect(e_1.message).toEqual("url='ok_url/api/v1/status', status=404, message='not authorized'");
+                expect(e_1.message).toEqual("url=\"ok_url/api/v1/status\", status=404, message=\"not authorized\"");
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
@@ -109,7 +109,7 @@ test("invalid request", function () { return __awaiter(_this, void 0, void 0, fu
                 return [3 /*break*/, 4];
             case 3:
                 e_2 = _a.sent();
-                expect(e_2.message).toEqual("url='error_400_url/api/v1/status', status=400, message='not found'");
+                expect(e_2.message).toEqual("url=\"error_400_url/api/v1/status\", status=400, message=\"not found\"");
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
@@ -131,7 +131,7 @@ test("server error", function () { return __awaiter(_this, void 0, void 0, funct
                 return [3 /*break*/, 4];
             case 3:
                 e_3 = _a.sent();
-                expect(e_3.message).toEqual("url='error_500_url/api/v1/status', status=500, message='internal server error'");
+                expect(e_3.message).toEqual("url=\"error_500_url/api/v1/status\", status=500, message=\"internal server error\"");
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
