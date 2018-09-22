@@ -65,3 +65,7 @@ typings/
 
 # Random test files
 my_*.*
+
+# Ignore test
+__tests__/*.js
+__tests__/*.d.js
