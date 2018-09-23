@@ -244,6 +244,7 @@ class OneTimeSecretApi {
      */
     public async shareLink(secret: string, options?: ApiOptionsShare): Promise<string> {
         console.warn("shareLink is deprecated and will be removed in version 2 of the library.");
+
         const response: ApiResponseShare = await this.share(secret, options);
 
         return response.share_link;
@@ -290,7 +291,7 @@ class OneTimeSecretApi {
      * @returns that returns response object
      * @throws error if no secret key defined or connection/request fails
      */
-    public async retrieve_secret(
+    public async retrieveSecret(
         secretKey: string,
         options?: ApiOptionsRetrieveSecret): Promise<ApiResponseRetrieveSecret> {
         if (isUndefined(secretKey)) {
@@ -303,11 +304,31 @@ class OneTimeSecretApi {
         };
 
         const request: ApiRequest = createApiRequest(
-            "retrieve_secret",
+            "retrieveSecret",
             this.apiVersion,
             init);
 
         return await request.send();
+    }
+
+    /**
+     * Retrieve the secret specified by the key.
+     * Please check the API description for the other available keys:
+     * https://onetimesecret.com/docs/api/secrets
+     *
+     * @deprecated replaced by retrieveSecret
+     * @param secretKey secret key of the secret
+     * @param options optional parameters
+     * @returns that returns response object
+     * @throws error if no secret key defined or connection/request fails
+     */
+    public async retrieve_secret(
+        secretKey: string,
+        options?: ApiOptionsRetrieveSecret): Promise<ApiResponseRetrieveSecret> {
+        console.warn("retrieve_secret is deprecated and will be removed " +
+            "in version 2 of the library. Please use retrieveSecret instead.");
+
+        return await this.retrieveSecret(secretKey, options);
     }
 
     /**
@@ -320,7 +341,7 @@ class OneTimeSecretApi {
      * @returns promise that returns response object
      * @throws error if no metadata key defined or connection/request fails
      */
-    public async retrieve_metadata(
+    public async retrieveMetadata(
         metadataKey: string): Promise<ApiResponseRetrieveMetadata> {
         if (isUndefined(metadataKey)) {
             throw new ConfigError("No metadata_key provided");
@@ -331,7 +352,7 @@ class OneTimeSecretApi {
         };
 
         const request: ApiRequest = createApiRequest(
-            "retrieve_metadata",
+            "retrieveMetadata",
             this.apiVersion,
             init);
 
@@ -348,6 +369,26 @@ class OneTimeSecretApi {
                 ...response,
             };
         }
+    }
+
+    /**
+     * Retrieve the metadata of the secret specified by the key.
+     * Please check the API description for the other available keys:
+     * https://onetimesecret.com/docs/api/secrets
+     *
+     * @deprecated replaced by retrieveMetadata
+     * @param metadataKey: private, unique key of the secret used for secret
+     *      management
+     * @returns promise that returns response object
+     * @throws error if no metadata key defined or connection/request fails
+     */
+    public async retrieve_metadata(
+        metadataKey: string): Promise<ApiResponseRetrieveMetadata> {
+        console.warn("retrieve_metadata is deprecated and will be " +
+            "removed in version 2 of the library. Please use retrieveMetadata " +
+            "instead.");
+
+        return await this.retrieveMetadata(metadataKey);
     }
 
     /**
@@ -386,13 +427,30 @@ class OneTimeSecretApi {
      * @returns promise that returns response object
      * @throws error if connection/request fails
      */
-    public async recent_metadata(): Promise<ApiResponseRecentMetadata[]> {
+    public async recentMetadata(): Promise<ApiResponseRecentMetadata[]> {
         const request: ApiRequest = createApiRequest(
-            "recent_metadata",
+            "recentMetadata",
             this.apiVersion,
             this.init);
 
         return await request.send();
+    }
+
+    /**
+     * Retrieve a list of recent metadata.
+     * Please check the API description for the other available keys:
+     * https://onetimesecret.com/docs/api/secrets
+     *
+     * @deprecated
+     * @returns promise that returns response object
+     * @throws error if connection/request fails
+     */
+    public async recent_metadata(): Promise<ApiResponseRecentMetadata[]> {
+        console.warn("recent_metadata is deprecated and will be " +
+            "removed in version 2 of the library. Please use recentMetadata " +
+            "instead.");
+
+        return await this.recentMetadata();
     }
 
     /** Create the secret link from the secret. */

@@ -12,10 +12,10 @@ type RequestType = (
     "status" |
     "share" |
     "generate" |
-    "retrieve_secret" |
-    "retrieve_metadata" |
+    "retrieveSecret" |
+    "retrieveMetadata" |
     "burn" |
-    "recent_metadata");
+    "recentMetadata");
 
 type ApiVersion = "v1";
 
@@ -34,13 +34,13 @@ const REQUEST_CONFIG: RequestConfig = {
     generate: {
         v1: apiV1.ApiRequestGenerate,
     },
-    recent_metadata: {
+    recentMetadata: {
         v1: apiV1.ApiRequestRecentMetadata,
     },
-    retrieve_metadata: {
+    retrieveMetadata: {
         v1: apiV1.ApiRequestRetrieveMetadata,
     },
-    retrieve_secret: {
+    retrieveSecret: {
         v1: apiV1.ApiRequestRetrieveSecret,
     },
     share: {

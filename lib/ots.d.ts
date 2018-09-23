@@ -145,12 +145,36 @@ declare class OneTimeSecretApi {
      * @returns that returns response object
      * @throws error if no secret key defined or connection/request fails
      */
+    retrieveSecret(secretKey: string, options?: ApiOptionsRetrieveSecret): Promise<ApiResponseRetrieveSecret>;
+    /**
+     * Retrieve the secret specified by the key.
+     * Please check the API description for the other available keys:
+     * https://onetimesecret.com/docs/api/secrets
+     *
+     * @deprecated replaced by retrieveSecret
+     * @param secretKey secret key of the secret
+     * @param options optional parameters
+     * @returns that returns response object
+     * @throws error if no secret key defined or connection/request fails
+     */
     retrieve_secret(secretKey: string, options?: ApiOptionsRetrieveSecret): Promise<ApiResponseRetrieveSecret>;
     /**
      * Retrieve the metadata of the secret specified by the key.
      * Please check the API description for the other available keys:
      * https://onetimesecret.com/docs/api/secrets
      *
+     * @param metadataKey: private, unique key of the secret used for secret
+     *      management
+     * @returns promise that returns response object
+     * @throws error if no metadata key defined or connection/request fails
+     */
+    retrieveMetadata(metadataKey: string): Promise<ApiResponseRetrieveMetadata>;
+    /**
+     * Retrieve the metadata of the secret specified by the key.
+     * Please check the API description for the other available keys:
+     * https://onetimesecret.com/docs/api/secrets
+     *
+     * @deprecated replaced by retrieveMetadata
      * @param metadataKey: private, unique key of the secret used for secret
      *      management
      * @returns promise that returns response object
@@ -173,6 +197,16 @@ declare class OneTimeSecretApi {
      * Please check the API description for the other available keys:
      * https://onetimesecret.com/docs/api/secrets
      *
+     * @returns promise that returns response object
+     * @throws error if connection/request fails
+     */
+    recentMetadata(): Promise<ApiResponseRecentMetadata[]>;
+    /**
+     * Retrieve a list of recent metadata.
+     * Please check the API description for the other available keys:
+     * https://onetimesecret.com/docs/api/secrets
+     *
+     * @deprecated
      * @returns promise that returns response object
      * @throws error if connection/request fails
      */

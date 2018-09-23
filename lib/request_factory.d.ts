@@ -2,7 +2,7 @@
  * Module provides functionality to provide API requests.
  */
 import { ApiRequestInit } from "./request";
-declare type RequestType = ("status" | "share" | "generate" | "retrieve_secret" | "retrieve_metadata" | "burn" | "recent_metadata");
+declare type RequestType = ("status" | "share" | "generate" | "retrieveSecret" | "retrieveMetadata" | "burn" | "recentMetadata");
 declare type ApiVersion = "v1";
 /**
  * Create an API request object of given type using the given init parameter
