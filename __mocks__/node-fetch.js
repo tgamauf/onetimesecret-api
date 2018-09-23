@@ -49,90 +49,94 @@ var BASE_PATH_REGEX = "" + [OK_URL, "api", OK_API_VERSION].join("/");
 var REQUESTS = [
     {
         // status
-        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, "status"].join("/")),
-        METHOD: "GET",
         BODY: null,
-        RESPONSE: new Response({ status: "nominal" }, { ok: true, status: 200 })
+        METHOD: "GET",
+        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, "status"].join("/")),
+        RESPONSE: new Response({ status: "nominal" }, { ok: true, status: 200 }),
     },
     {
         // share
-        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, "share"].join("/")),
-        METHOD: "POST",
         BODY: new RegExp("(?:^secret=\\w+$)|(?:^secret=\\w+&passphrase=\\w+&ttl=\\d+&recipient=\\w+$)"),
         BODY_REQUIRED: true,
-        RESPONSE: new Response({ secret_key: "test" }, { ok: true, status: 200 })
+        METHOD: "POST",
+        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, "share"].join("/")),
+        RESPONSE: new Response({ secret_key: "test" }, { ok: true, status: 200 }),
     },
     {
         // generate
-        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, "generate"].join("/")),
-        METHOD: "POST",
         BODY: new RegExp("(?:^passphrase=\\w+&ttl=\\d+&recipient=\\w+$)"),
         BODY_REQUIRED: false,
-        RESPONSE: new Response({ secret_key: "generated" }, { ok: true, status: 200 })
+        METHOD: "POST",
+        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, "generate"].join("/")),
+        RESPONSE: new Response({ secret_key: "generated" }, { ok: true, status: 200 }),
     },
     {
         // retrieve secret
-        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, "secret", "secretKey"].join("/")),
-        METHOD: "POST",
         BODY: new RegExp("^passphrase=\\w+$"),
         BODY_REQUIRED: false,
-        RESPONSE: new Response({ value: "secret" }, { ok: true, status: 200 })
+        METHOD: "POST",
+        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, "secret", "secretKey"].join("/")),
+        RESPONSE: new Response({ value: "secret" }, { ok: true, status: 200 }),
     },
     {
         // retrieve secret unknown key
-        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, "secret", "unknownKey"].join("/")),
-        METHOD: "POST",
         BODY: new RegExp("^passphrase=\\w+$"),
         BODY_REQUIRED: false,
-        RESPONSE: new Response({ message: "Unknown secret" }, { ok: false, status: 404, headers: ERROR_RESPONSE_HEADER_JSON })
+        METHOD: "POST",
+        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, "secret", "unknownKey"].join("/")),
+        RESPONSE: new Response({ message: "Unknown secret" }, {
+            headers: ERROR_RESPONSE_HEADER_JSON,
+            ok: false,
+            status: 404,
+        }),
     },
     {
         // retrieve metadata
-        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, "private", "mykey"].join("/")),
-        METHOD: "POST",
         BODY: null,
-        RESPONSE: new Response({ secret_key: "secret" }, { ok: true, status: 200 })
+        METHOD: "POST",
+        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, "private", "mykey"].join("/")),
+        RESPONSE: new Response({ secret_key: "secret" }, { ok: true, status: 200 }),
     },
     {
         // retrieve metadata burned secret
-        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, 'private', 'myBurnedKey'].join('/')),
-        METHOD: 'POST',
         BODY: null,
-        RESPONSE: new Response({ metadata_key: 'metadata' }, { ok: true, status: 200 })
+        METHOD: "POST",
+        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, "private", "myBurnedKey"].join("/")),
+        RESPONSE: new Response({ metadata_key: "metadata" }, { ok: true, status: 200 }),
     },
     {
         // burn
-        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, "private", "burnKey", "burn"].join("/")),
-        METHOD: "POST",
         BODY: null,
-        RESPONSE: new Response({ state: "burned" }, { ok: true, status: 200 })
+        METHOD: "POST",
+        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, "private", "burnKey", "burn"].join("/")),
+        RESPONSE: new Response({ state: "burned" }, { ok: true, status: 200 }),
     },
     {
         // recent
-        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, "private", "recent"].join("/")),
-        METHOD: "GET",
         BODY: null,
-        RESPONSE: new Response([{ metadata_key: 0 }], { ok: true, status: 200 })
+        METHOD: "GET",
+        PATH_PATTERN: new RegExp("" + [BASE_PATH_REGEX, "private", "recent"].join("/")),
+        RESPONSE: new Response([{ metadata_key: 0 }], { ok: true, status: 200 }),
     },
 ];
 var RESPONSE_SERVER_OFFLINE = new Response({ status: "offline" }, { ok: true, status: 200 });
 var RESPONSE_ERROR_NOT_AUTH = new Response({ message: "Not authorized" }, {
+    headers: ERROR_RESPONSE_HEADER_JSON,
     ok: false,
     status: 404,
     statusText: "Not found",
-    headers: ERROR_RESPONSE_HEADER_JSON
 });
 var RESPONSE_ERROR_400 = new Response(null, {
+    headers: ERROR_RESPONSE_HEADER,
     ok: false,
     status: 400,
     statusText: "Not Found",
-    headers: ERROR_RESPONSE_HEADER
 });
 var RESPONSE_ERROR_500 = new Response(null, {
+    headers: ERROR_RESPONSE_HEADER,
     ok: false,
     status: 500,
     statusText: "internal server error",
-    headers: ERROR_RESPONSE_HEADER
 });
 function fetch(url, init) {
     return new Promise(function (resolve, reject) {

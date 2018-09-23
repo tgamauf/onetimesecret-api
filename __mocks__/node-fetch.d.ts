@@ -1,15 +1,15 @@
 declare class Headers {
-    data: object;
+    private readonly data;
     constructor();
     append(key: any, value: any): void;
     get(key: any): any;
 }
 declare class Response {
-    body: any;
-    ok: boolean;
-    status: number;
-    statusText: string;
-    headers: Headers;
+    private readonly body;
+    private ok;
+    private status;
+    private statusText;
+    private headers;
     constructor(body: any, init: any);
     json(): Promise<{}>;
 }

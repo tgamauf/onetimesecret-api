@@ -26,6 +26,9 @@ declare class NotAuthorizedError extends Error {
 declare class RateLimitedError extends Error {
     constructor(message: string);
 }
+declare class InternalServerError extends Error {
+    constructor(message: string);
+}
 /**
  * Join up the parameters in the dict to conform to
  * application/x-www-form-urlencoded encoding.
@@ -73,4 +76,4 @@ declare class ApiRequest {
      */
     protected process(response: object): any;
 }
-export { TimeoutError, UnknownSecretError, NotFoundError, NotAuthorizedError, RateLimitedError, Method, ApiRequestInit, urlEncodeDict, ApiRequest };
+export { TimeoutError, UnknownSecretError, NotFoundError, NotAuthorizedError, RateLimitedError, InternalServerError, Method, ApiRequestInit, urlEncodeDict, ApiRequest };

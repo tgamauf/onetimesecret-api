@@ -15,6 +15,7 @@ import {
     OneTimeSecretApi,
 } from "./lib/ots";
 import {
+    InternalServerError,
     NotAuthorizedError,
     NotFoundError,
     RateLimitedError,
@@ -29,6 +30,7 @@ export {
     NotFoundError,
     NotAuthorizedError,
     RateLimitedError,
+    InternalServerError,
     ConfigError,
     ApiVersion,
     ApiResponseState,

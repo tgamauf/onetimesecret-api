@@ -80,6 +80,14 @@ class RateLimitedError extends Error {
     }
 }
 
+class InternalServerError extends Error {
+    constructor(message: string) {
+        super(message);
+
+        Object.setPrototypeOf(this, InternalServerError.prototype);
+    }
+}
+
 
 /**
  * Join up the parameters in the dict to conform to
@@ -206,6 +214,12 @@ class ApiRequest {
             {init, ...defaultOptions, ...options});
 
         if (!response.ok) {
+            if (response.status === 500) {
+                throw new InternalServerError(
+                    `url="${url}", status=${response.status}, `
+                    + `message="${response.statusText}"`);
+            }
+
             if (isUndefined(response.headers)) {
                 throw new Error(
                     `url='${url}', status=${response.status}, `
@@ -296,6 +310,7 @@ export {
     NotFoundError,
     NotAuthorizedError,
     RateLimitedError,
+    InternalServerError,
     Method,
     ApiRequestInit,
     urlEncodeDict,
