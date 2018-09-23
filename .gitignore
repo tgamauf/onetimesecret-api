@@ -68,4 +68,5 @@ my_*.*
 
 # Ignore test
 __tests__/*.js
-__tests__/*.d.js
+__tests__/*.js.map
+__tests__/*.d.ts
