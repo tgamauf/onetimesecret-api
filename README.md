@@ -81,6 +81,7 @@ status() -> boolean
 ```
 - Returns boolean state of server
 - Throws
+    - `InternalServerError`: unspecified internal server error
     - `TimeoutError`: request timeout
     - `NotAuthorizedError`: invalid username or password
     - `RateLimitedError`: account has been rate limited due to many requests
@@ -114,6 +115,7 @@ share(<secret>, [<options>]) -> object
     - `metadata_key`: key used to manage the secret; this key must remain **private**
 - Throws
     - `ConfigError`: no secret provided
+    - `InternalServerError`: unspecified internal server error
     - `FetchError`: fetch call failed
     - `NotFoundError`: the call isn't supported by the server
     - `TimeoutError`: request timeout
@@ -158,6 +160,7 @@ shareLink(<secret>, [<options>]) -> string
 - Returns the share link as a string
 - Throws
     - `ConfigError`: no secret provided
+    - `InternalServerError`: unspecified internal server error
     - `FetchError`: fetch call failed
     - `NotFoundError`: the call isn't supported by the server
     - `TimeoutError`: request timeout
@@ -191,6 +194,7 @@ generate([<options>]) -> object
     - `share_link`: the share link of the secret that is supposed to be be shared
     - `metadata_key`: key used to manage the secret; this key must remain **private**
 - Throws
+    - `InternalServerError`: unspecified internal server error
     - `FetchError`: fetch call failed
     - `TimeoutError`: request timeout
     - `NotFoundError`: the call isn't supported by the server
@@ -223,6 +227,7 @@ retrieve_secret(secret_key, [<options>]) -> object
     - `value`: the secret shared with you
 - Throws
     - `ConfigError`: no secret key provided
+    - `InternalServerError`: unspecified internal server error
     - `FetchError`: fetch call failed
     - `NotFoundError`: the call isn't supported by the server
     - `UnknownSecretError`: secret key not found
@@ -256,6 +261,7 @@ retrieve_metadata(metadata_key) -> object
     - `status`: status of the secret, e.g. "new", "received", "burned", "viewed", ... 
 - Throws
     - `ConfigError`: no metadata key provided
+    - `InternalServerError`: unspecified internal server error
     - `FetchError`: fetch call failed
     - `NotFoundError`: the call isn't supported by the server
     - `UnknownSecretError`: metadata key not found
@@ -288,6 +294,7 @@ burn(metadata_key) -> object
     - `status`: status of the secret set to "burned"
 - Throws
     - `ConfigError`: no metadata key provided
+    - `InternalServerError`: unspecified internal server error
     - `FetchError`: fetch call failed
     - `NotFoundError`: the call isn't supported by the server
     - `UnknownSecretError`: metadata key not found
@@ -316,6 +323,7 @@ recent_metadata() -> Array[object]
 
 - Returns a promise that provides an `ApiResponseRecentMetadata` object. The returned object contains a list if objects where each object represents a secret. It has a subset of attributes as described for `retrieve_metadata`.
 - Throws
+    - `InternalServerError`: unspecified internal server error
     - `FetchError`: fetch call failed
     - `NotFoundError`: the call isn't supported by the server
     - `TimeoutError`: request timeout
