@@ -4,7 +4,6 @@
 
 "use strict";
 
-import {isUndefined} from "util";
 import {ApiRequest} from "./request";
 import {ApiVersion, createApiRequest} from "./request_factory";
 
@@ -163,7 +162,8 @@ class OneTimeSecretApi {
             url: DEFAULT_URL,
         };
 
-        if (isUndefined(username) || isUndefined(password)) {
+        if ((typeof username  === "undefined")
+                || (typeof password === "undefined")) {
             throw new ConfigError("No username or password provided");
         }
 
@@ -206,7 +206,7 @@ class OneTimeSecretApi {
      */
     public async share(secret: string,
                        options?: ApiOptionsShare): Promise<ApiResponseShare> {
-        if (isUndefined(secret)) {
+        if (typeof secret === "undefined") {
             throw new ConfigError("No secret provided");
         }
 
@@ -294,7 +294,7 @@ class OneTimeSecretApi {
     public async retrieveSecret(
         secretKey: string,
         options?: ApiOptionsRetrieveSecret): Promise<ApiResponseRetrieveSecret> {
-        if (isUndefined(secretKey)) {
+        if (typeof secretKey === "undefined") {
             throw new ConfigError("No secret_key provided");
         }
         const init: ApiInitRetrieveSecret = {
@@ -343,7 +343,7 @@ class OneTimeSecretApi {
      */
     public async retrieveMetadata(
         metadataKey: string): Promise<ApiResponseRetrieveMetadata> {
-        if (isUndefined(metadataKey)) {
+        if (typeof metadataKey === "undefined") {
             throw new ConfigError("No metadata_key provided");
         }
         const init: ApiInitRetrieveMetadata = {
@@ -358,7 +358,7 @@ class OneTimeSecretApi {
 
         const response = await request.send();
 
-        if (isUndefined(response.secret_key)) {
+        if (typeof response.secret_key === "undefined") {
             return response;
         } else {
             const shareLink: string = this.createSecretUrl(
@@ -402,7 +402,7 @@ class OneTimeSecretApi {
      * @throws error if no metadata key defined or connection/request fails
      */
     public async burn(metadataKey: string): Promise<ApiResponseBurn> {
-        if (isUndefined(metadataKey)) {
+        if (typeof metadataKey === "undefined") {
             throw new ConfigError("No metadata_key provided");
         }
 

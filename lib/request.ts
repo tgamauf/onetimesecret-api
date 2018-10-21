@@ -6,7 +6,6 @@
 
 import {Buffer} from "buffer";
 import fetch, {Headers, Response} from "node-fetch";
-import {isUndefined} from "util";
 
 const API_PATH: string = "api";
 const FETCH_TIMEOUT_S: number = 30;
@@ -126,10 +125,10 @@ async function fetchWithTimeout(
     let fetchTimeout: number;
     let init: FetchInit;
 
-    if (!isUndefined(options.timeoutS)) {
+    if (typeof options.timeoutS !== "undefined") {
         fetchTimeout = options.timeoutS * 1000;
     }
-    if (!isUndefined(options.init)) {
+    if (typeof options.init !== "undefined") {
         init = options.init;
     }
 
@@ -137,7 +136,7 @@ async function fetchWithTimeout(
         let didTimeOut: boolean = false;
         let timeout: any;
 
-        if (!isUndefined(fetchTimeout)) {
+        if (typeof fetchTimeout !== "undefined") {
             timeout = setTimeout((): void => {
                     didTimeOut = true;
 
@@ -220,7 +219,7 @@ class ApiRequest {
                     + `message="${response.statusText}"`);
             }
 
-            if (isUndefined(response.headers)) {
+            if (typeof response.headers === "undefined") {
                 throw new Error(
                     `url='${url}', status=${response.status}, `
                     + `message='${response.statusText}', headers missing`);

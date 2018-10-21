@@ -4,7 +4,6 @@
 
 "use strict";
 
-import {isUndefined} from "util";
 import {ApiRequest, ApiRequestInit, urlEncodeDict} from "./request";
 
 
@@ -99,13 +98,13 @@ class ApiRequestShare extends ApiRequest {
         super(init);
 
         const body: ShareBody = {secret: init.secret};
-        if (!isUndefined(init.passphrase)) {
+        if (typeof init.passphrase !== "undefined") {
             body.passphrase = init.passphrase;
         }
-        if (!isUndefined(init.ttl)) {
+        if (typeof init.ttl !== "undefined") {
             body.ttl = init.ttl;
         }
-        if (!isUndefined(init.recipient)) {
+        if (typeof init.recipient !== "undefined") {
             body.recipient = init.recipient;
         }
 
@@ -126,13 +125,13 @@ class ApiRequestGenerate extends ApiRequest {
         super(init);
 
         const body: GenerateBody = {};
-        if (!isUndefined(init.passphrase)) {
+        if (typeof init.passphrase !== "undefined") {
             body.passphrase = init.passphrase;
         }
-        if (!isUndefined(init.ttl)) {
+        if (typeof init.ttl !== "undefined") {
             body.ttl = init.ttl;
         }
-        if (!isUndefined(init.recipient)) {
+        if (typeof init.recipient !== "undefined") {
             body.recipient = init.recipient;
         }
 
@@ -156,7 +155,7 @@ class ApiRequestRetrieveSecret extends ApiRequest {
         super(init);
 
         const body: RetrieveSecretBody = {};
-        if (!isUndefined(init.passphrase)) {
+        if (typeof init.passphrase !== "undefined") {
             body.passphrase = init.passphrase;
         }
 
