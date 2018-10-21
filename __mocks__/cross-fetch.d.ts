@@ -14,5 +14,5 @@ declare class Response {
     json(): Promise<{}>;
 }
 declare function fetch(url: any, init: any): Promise<{}>;
-export { Headers, Response, };
+export { fetch, Headers, Response, };
 export default fetch;

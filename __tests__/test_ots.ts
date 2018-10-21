@@ -1,4 +1,4 @@
-jest.mock("node-fetch");
+jest.mock("cross-fetch");
 
 import {ConfigError, OneTimeSecretApi} from "../index";
 

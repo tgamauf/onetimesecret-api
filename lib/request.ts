@@ -2,10 +2,11 @@
  * Module defines generic requests.
  */
 
+
 "use strict";
 
 import {Buffer} from "buffer";
-import fetch, {Headers, Response} from "node-fetch";
+import {fetch, Headers, Response} from "cross-fetch";
 
 const API_PATH: string = "api";
 const FETCH_TIMEOUT_S: number = 30;
@@ -14,6 +15,7 @@ type Method = "GET" | "POST";
 
 interface FetchInit {
     method: Method;
+    // @ts-ignore
     headers?: Headers;
     body?: any;
 }
@@ -146,6 +148,7 @@ async function fetchWithTimeout(
         }
 
         fetch(url, init)
+            // @ts-ignore
             .then((response: Response): void => {
                 if (timeout) {
                     // Clear the timeout as cleanup
@@ -172,6 +175,7 @@ class ApiRequest {
     protected method: Method;
     protected body?: any;
 
+    // @ts-ignore
     private readonly headers: Headers;
     private apiUrl: string;
 
@@ -208,6 +212,7 @@ class ApiRequest {
 
         const [url, init] = this.prepare();
 
+        // @ts-ignore
         const response: Response = await fetchWithTimeout(
             url,
             {init, ...defaultOptions, ...options});
@@ -314,4 +319,4 @@ export {
     ApiRequestInit,
     urlEncodeDict,
     ApiRequest
-};
+}

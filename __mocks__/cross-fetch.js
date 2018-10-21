@@ -183,5 +183,6 @@ function fetch(url, init) {
         resolve(request.RESPONSE);
     });
 }
+exports.fetch = fetch;
 exports.default = fetch;
-//# sourceMappingURL=node-fetch.js.map
+//# sourceMappingURL=cross-fetch.js.map

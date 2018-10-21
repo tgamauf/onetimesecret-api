@@ -206,6 +206,7 @@ function fetch(url, init) {
 }
 
 export {
+    fetch,
     Headers,
     Response,
 };
