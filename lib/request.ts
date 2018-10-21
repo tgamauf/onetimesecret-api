@@ -6,7 +6,7 @@
 "use strict";
 
 import {Buffer} from "buffer";
-import {fetch, Headers, Response} from "cross-fetch";
+import fetch, {Headers, Response} from "cross-fetch";
 
 const API_PATH: string = "api";
 const FETCH_TIMEOUT_S: number = 30;
