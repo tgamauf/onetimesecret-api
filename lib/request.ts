@@ -8,6 +8,15 @@
 import {Buffer} from "buffer";
 import fetch, {Headers, Response} from "cross-fetch";
 
+// setPrototypeOf polyfill for React Native Android
+Object.setPrototypeOf =
+    Object.setPrototypeOf ||
+    function(obj, proto) {
+        obj.__proto__ = proto;
+        return obj;
+    };
+
+
 const API_PATH: string = "api";
 const FETCH_TIMEOUT_S: number = 30;
 
@@ -89,6 +98,22 @@ class InternalServerError extends Error {
     }
 }
 
+class NetworkError extends Error {
+    constructor(message: string) {
+        super(message);
+
+        Object.setPrototypeOf(this, NetworkError.prototype);
+    }
+}
+
+class CORSError extends Error {
+    constructor(message: string) {
+        super(message);
+
+        Object.setPrototypeOf(this, CORSError.prototype);
+    }
+}
+
 
 /**
  * Join up the parameters in the dict to conform to
@@ -163,9 +188,21 @@ async function fetchWithTimeout(
                 // Rejection already happened with setTimeout
                 if (didTimeOut) {
                     return;
+                } else if (timeout) {
+                    // Clear the timeout as cleanup
+                    clearTimeout(timeout);
                 }
 
-                reject(error);
+                let parsedError = error;
+                if (error instanceof TypeError) {
+                    if (error.message.indexOf("Network Request Failed") != -1) {
+                        parsedError = new NetworkError("Network request failed");
+                    } else {
+                        parsedError = new CORSError("CORS error");
+                    }
+                }
+
+                reject(parsedError);
             });
     });
 }
