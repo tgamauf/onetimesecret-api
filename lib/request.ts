@@ -106,14 +106,6 @@ class NetworkError extends Error {
     }
 }
 
-class CORSError extends Error {
-    constructor(message: string) {
-        super(message);
-
-        Object.setPrototypeOf(this, CORSError.prototype);
-    }
-}
-
 
 /**
  * Join up the parameters in the dict to conform to
@@ -195,11 +187,7 @@ async function fetchWithTimeout(
 
                 let parsedError = error;
                 if (error instanceof TypeError) {
-                    if (error.message.indexOf("Network Request Failed") != -1) {
-                        parsedError = new NetworkError("Network request failed");
-                    } else {
-                        parsedError = new CORSError("CORS error");
-                    }
+                    parsedError = new NetworkError("Network request failed");
                 }
 
                 reject(parsedError);

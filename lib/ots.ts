@@ -8,6 +8,15 @@ import {ApiRequest} from "./request";
 import {ApiVersion, createApiRequest} from "./request_factory";
 
 
+// setPrototypeOf polyfill for React Native Android
+Object.setPrototypeOf =
+    Object.setPrototypeOf ||
+    function(obj, proto) {
+        obj.__proto__ = proto;
+        return obj;
+    };
+
+
 interface ApiInit {
     username: string;
     password: string;
@@ -462,6 +471,7 @@ class OneTimeSecretApi {
 
 export {
     ConfigError,
+    ApiOptions,
     ApiVersion,
     ApiResponseState,
     ApiOptionsShare,

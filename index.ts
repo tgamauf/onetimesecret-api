@@ -1,4 +1,5 @@
 import {
+    ApiOptions,
     ApiOptionsGenerate,
     ApiOptionsRetrieveSecret,
     ApiOptionsShare,
@@ -30,6 +31,7 @@ export {
     RateLimitedError,
     InternalServerError,
     ConfigError,
+    ApiOptions,
     ApiVersion,
     ApiResponseState,
     ApiOptionsShare,

@@ -214,4 +214,4 @@ declare class OneTimeSecretApi {
     /** Create the secret link from the secret. */
     private createSecretUrl;
 }
-export { ConfigError, ApiVersion, ApiResponseState, ApiOptionsShare, ApiResponseShare, ApiOptionsGenerate, ApiResponseGenerate, ApiOptionsRetrieveSecret, ApiResponseRetrieveSecret, ApiResponseRetrieveMetadata, ApiResponseBurn, ApiResponseRecentMetadata, OneTimeSecretApi };
+export { ConfigError, ApiOptions, ApiVersion, ApiResponseState, ApiOptionsShare, ApiResponseShare, ApiOptionsGenerate, ApiResponseGenerate, ApiOptionsRetrieveSecret, ApiResponseRetrieveSecret, ApiResponseRetrieveMetadata, ApiResponseBurn, ApiResponseRecentMetadata, OneTimeSecretApi };
