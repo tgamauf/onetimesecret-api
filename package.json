@@ -19,8 +19,20 @@
   "readmeFilename": "README.md",
   "license": "MIT",
   "dependencies": {
-    "buffer": ">=5.0.0",
-    "cross-fetch": "^2.2.2"
+    "buffer": "^5.0.0",
+    "cross-fetch": "^2.2.2",
+    "handlebars": "^4.0.14",
+    "js-yaml": "^3.13.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.3.2",
+    "@types/node": "^10.10.1",
+    "@types/node-fetch": "^2.1.2",
+    "jest": "^22.0.0",
+    "ts-jest": "^23.10.1",
+    "ts-lint": "^4.5.1",
+    "typescript": "^3.1.3",
+    "typescript-eslint-parser": "^18.0.0"
   },
   "engines": {
     "node": ">=8.0.0"
@@ -32,16 +44,6 @@
   "scripts": {
     "test": "jest"
   },
-  "devDependencies": {
-    "@types/jest": "^23.3.2",
-    "@types/node": "^10.10.1",
-    "@types/node-fetch": "^2.1.2",
-    "jest": ">=22.0.0",
-    "ts-jest": "^23.10.1",
-    "ts-lint": "^4.5.1",
-    "typescript": "^3.1.3",
-    "typescript-eslint-parser": "^18.0.0"
-  },
   "jest": {
     "moduleFileExtensions": [
       "ts",
@@ -51,6 +53,7 @@
     "transform": {
       "\\.(ts|tsx)$": "ts-jest"
     },
-    "testRegex": "/__tests__/.*\\.(ts|tsx|js)$"
+    "testRegex": "/__tests__/.*\\.(ts|tsx|js)$",
+    "testURL": "http://localhost/"
   }
 }

@@ -1,6 +1,6 @@
 jest.mock("cross-fetch");
 
-import {ConfigError, OneTimeSecretApi} from "../index";
+import {OneTimeSecretApi} from "../index";
 
 // The username, apiKey, url, version, ... can have special meaning
 // The meaning is defined in the node-fetch mock
