@@ -23,7 +23,9 @@
     "cross-fetch": "^2.2.2",
     "handlebars": "^4.1.0",
     "js-yaml": "^3.13.1",
-    "mem": "^4.0.0"
+    "mem": "^4.0.0",
+    "set-value": "^2.0.1",
+    "merge": "^1.2.1"
   },
   "devDependencies": {
     "@types/jest": "^23.3.2",
