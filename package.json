@@ -1,6 +1,6 @@
 {
   "name": "onetimesecret-api",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "node.js module for the OneTimeSecret API",
   "main": "index.ts",
   "repository": {
@@ -24,8 +24,8 @@
     "handlebars": "^4.1.0",
     "js-yaml": "^3.13.1",
     "mem": "^4.0.0",
-    "set-value": "^2.0.1",
-    "merge": "^1.2.1"
+    "merge": "^1.2.1",
+    "set-value": "^2.0.1"
   },
   "devDependencies": {
     "@types/jest": "^23.3.2",
