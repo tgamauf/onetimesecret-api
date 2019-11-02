@@ -8,7 +8,7 @@ A thin Javascript wrapper around the [OneTimeSecret API](https://onetimesecret.c
 The module is published on NPM as *onetimesecret-api*.
 
 ### Dependencies
-- Node.js: 8+
+- Node.js: 8 and 10+
 
 ### Installation
 ```bash
