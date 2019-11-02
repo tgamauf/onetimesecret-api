@@ -11,7 +11,7 @@ import {
     ApiResponseShare,
     ApiResponseState,
     ApiVersion,
-    ConfigError,
+    InputError,
     OneTimeSecretApi,
 } from "./lib/ots";
 import {
@@ -30,7 +30,7 @@ export {
     NotAuthorizedError,
     RateLimitedError,
     InternalServerError,
-    ConfigError,
+    InputError,
     ApiOptions,
     ApiVersion,
     ApiResponseState,

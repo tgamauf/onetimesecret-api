@@ -29,6 +29,9 @@ declare class RateLimitedError extends Error {
 declare class InternalServerError extends Error {
     constructor(message: string);
 }
+declare class InputError extends Error {
+    constructor(message: string);
+}
 /**
  * Join up the parameters in the dict to conform to
  * application/x-www-form-urlencoded encoding.
@@ -38,6 +41,7 @@ declare class InternalServerError extends Error {
  */
 declare function urlEncodeDict(data: object): string;
 declare class ApiRequest {
+    protected readonly keyRegex: RegExp;
     protected path: string;
     protected method: Method;
     protected body?: any;
@@ -75,5 +79,12 @@ declare class ApiRequest {
      * @returns processed response object
      */
     protected process(response: object): any;
+    /**
+     * Check the if the provided key is valid.
+     *
+     * @param key key to check
+     * @raises InputError if an invalid key has been provided
+     */
+    protected checkValidKey(key?: string): void;
 }
-export { TimeoutError, UnknownSecretError, NotFoundError, NotAuthorizedError, RateLimitedError, InternalServerError, Method, ApiRequestInit, urlEncodeDict, ApiRequest };
+export { TimeoutError, UnknownSecretError, NotFoundError, NotAuthorizedError, RateLimitedError, InternalServerError, InputError, Method, ApiRequestInit, urlEncodeDict, ApiRequest };

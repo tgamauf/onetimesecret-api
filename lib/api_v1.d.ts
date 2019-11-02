@@ -26,12 +26,15 @@ interface RetrieveMetadataInit extends ApiRequestInit {
 interface BurnInit extends ApiRequestInit {
     metadataKey: string;
 }
-declare class ApiRequestStatus extends ApiRequest {
+declare class ApiRequestV1 extends ApiRequest {
+    protected readonly keyRegex: RegExp;
+}
+declare class ApiRequestStatus extends ApiRequestV1 {
     /**
      * Check server status.
      *
      * @constructor
-     * @augments ApiRequest
+     * @augments ApiRequestV1
      */
     constructor(init: ApiRequestInit);
     /**
@@ -42,47 +45,47 @@ declare class ApiRequestStatus extends ApiRequest {
      */
     protected process(response: StatusObject): boolean;
 }
-declare class ApiRequestShare extends ApiRequest {
+declare class ApiRequestShare extends ApiRequestV1 {
     /**
      * Send text to server for sharing.
      *
      * @constructor
-     * @augments ApiRequest
+     * @augments ApiRequestV1
      */
     constructor(init: ShareInit);
 }
-declare class ApiRequestGenerate extends ApiRequest {
+declare class ApiRequestGenerate extends ApiRequestV1 {
     /** Request a short, unique secret for sharing.
      *
      * @constructor
-     * @augments ApiRequest
+     * @augments ApiRequestV1
      */
     constructor(init: GenerateInit);
 }
-declare class ApiRequestRetrieveSecret extends ApiRequest {
+declare class ApiRequestRetrieveSecret extends ApiRequestV1 {
     /**
      * Retrieve a secret.
      *
      * @constructor
-     * @augments ApiRequest
+     * @augments ApiRequestV1
      */
     constructor(init: RetrieveSecretInit);
 }
-declare class ApiRequestRetrieveMetadata extends ApiRequest {
+declare class ApiRequestRetrieveMetadata extends ApiRequestV1 {
     /**
      * Retrieve metadata for a secret.
      *
      * @constructor
-     * @augments ApiRequest
+     * @augments ApiRequestV1
      */
     constructor(init: RetrieveMetadataInit);
 }
-declare class ApiRequestBurn extends ApiRequest {
+declare class ApiRequestBurn extends ApiRequestV1 {
     /**
      * Burn a secret.
      *
      * @constructor
-     * @augments ApiRequest
+     * @augments ApiRequestV1
      */
     constructor(init: BurnInit);
 }

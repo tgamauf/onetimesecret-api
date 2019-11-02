@@ -11,7 +11,7 @@ import {ApiVersion, createApiRequest} from "./request_factory";
 // setPrototypeOf polyfill for React Native Android
 Object.setPrototypeOf =
     Object.setPrototypeOf ||
-    function(obj, proto) {
+    function (obj, proto) {
         obj.__proto__ = proto;
         return obj;
     };
@@ -163,8 +163,8 @@ class OneTimeSecretApi {
             url: DEFAULT_URL,
         };
 
-        if ((typeof username  === "undefined")
-                || (typeof password === "undefined")) {
+        if ((typeof username === "undefined")
+            || (typeof password === "undefined")) {
             throw new InputError("No username or password provided");
         }
 

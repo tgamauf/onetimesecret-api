@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var ots_1 = require("./lib/ots");
-exports.ConfigError = ots_1.ConfigError;
+exports.InputError = ots_1.InputError;
 exports.OneTimeSecretApi = ots_1.OneTimeSecretApi;
 var request_1 = require("./lib/request");
 exports.InternalServerError = request_1.InternalServerError;

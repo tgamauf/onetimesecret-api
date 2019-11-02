@@ -63,9 +63,9 @@ const REQUEST_CONFIG: RequestConfig = {
  * @returns request object of specified type
  */
 function createApiRequest(
-        requestType: RequestType,
-        apiVersion: ApiVersion,
-        init: ApiRequestInit): any {
+    requestType: RequestType,
+    apiVersion: ApiVersion,
+    init: ApiRequestInit): any {
     return new REQUEST_CONFIG[requestType][apiVersion](init);
 }
 

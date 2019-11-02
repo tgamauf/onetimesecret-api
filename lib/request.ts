@@ -11,7 +11,7 @@ import fetch, {Headers, Response} from "cross-fetch";
 // setPrototypeOf polyfill for React Native Android
 Object.setPrototypeOf =
     Object.setPrototypeOf ||
-    function(obj, proto) {
+    function (obj, proto) {
         obj.__proto__ = proto;
         return obj;
     };
@@ -173,7 +173,7 @@ async function fetchWithTimeout(
         }
 
         fetch(url, init)
-            // @ts-ignore
+        // @ts-ignore
             .then((response: Response): void => {
                 if (timeout) {
                     // Clear the timeout as cleanup
@@ -292,7 +292,7 @@ class ApiRequest {
                 });
             } else {
                 let error: Error = null;
-                switch(response.statusText) {
+                switch (response.statusText) {
                     case "Not Found":
                         error = new NotFoundError("Path not found");
                         break;

@@ -19,23 +19,17 @@
   "readmeFilename": "README.md",
   "license": "MIT",
   "dependencies": {
-    "buffer": "^5.0.0",
-    "cross-fetch": "^2.2.2",
-    "handlebars": "^4.1.0",
-    "js-yaml": "^3.13.1",
-    "mem": "^4.0.0",
-    "merge": "^1.2.1",
-    "set-value": "^2.0.1"
+    "buffer": "^5.4.3",
+    "cross-fetch": "^3.0.4"
   },
   "devDependencies": {
-    "@types/jest": "^23.3.2",
-    "@types/node": "^10.10.1",
-    "@types/node-fetch": "^2.1.2",
-    "jest": "^22.0.0",
-    "ts-jest": "^23.10.1",
+    "@types/jest": "^24.0.21",
+    "@types/node": "^12.12.5",
+    "@types/node-fetch": "^2.5.3",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0",
     "ts-lint": "^4.5.1",
-    "typescript": "^3.1.3",
-    "typescript-eslint-parser": "^18.0.0"
+    "typescript": "^3.6.4"
   },
   "engines": {
     "node": ">=8.0.0"
@@ -45,7 +39,8 @@
   },
   "homepage": "https://github.com/tgamauf/onetimesecret-api",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc"
   },
   "jest": {
     "moduleFileExtensions": [
