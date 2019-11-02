@@ -305,3 +305,10 @@ ots.recentMetadata()
     console.error(`Error: ${error}`);
 });
 ```
+
+### Release
+
+1. Update and commit changes
+2. Compile Javascript files: `yarn build`
+3. Commit Javascript files
+4. Publish to npm: `yarn publish` or `npm publish`
