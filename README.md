@@ -39,7 +39,7 @@ OneTimeSecretApi(<username>, <api_key>, [<options>])
     - `<url>`: server url of a custom server
     - `<apiVersion>`: API version to use (currently only "v1"). `ApiVersion` provides a list of supported API versions
 - Returns instance of the API
-- Throws `ConfigError` if `<username>` or `<password>` is missing
+- Throws `InputError` if `<username>` or `<password>` is missing
 
 Example:
     
@@ -59,12 +59,12 @@ const ots = new OneTimeSecretApi(
 ```
 or
 ```javascript 1.6
-import {ConfigError, OneTimeSecretApi} from "onetimesecret-api";
+import {InputError, OneTimeSecretApi} from "onetimesecret-api";
 
 try {
     const ots = new OneTimeSecretApi();
 } catch(error) {
-    if (error instanceof ConfigError) {
+    if (error instanceof InputError) {
         console.error("Username or password missing");
     } else {
         console.error(`Unknown error: ${error}`);
@@ -114,7 +114,7 @@ share(<secret>, [<options>]) -> object
     - `share_link`: the share link of the secret that is supposed to be be shared
     - `metadata_key`: key used to manage the secret; this key must remain **private**
 - Throws
-    - `ConfigError`: no secret provided
+    - `InputError`: no secret provided
     - `InternalServerError`: unspecified internal server error
     - `FetchError`: fetch call failed
     - `NotFoundError`: the call isn't supported by the server
@@ -137,41 +137,6 @@ or
 ots.share('My very special secret', { ttl: 3600 })
 .then((response) => {
     console.log(`Secret key: ${response.secret_key}`);
-})
-.catch((error) => {
-    console.error(`Error: ${error}`);
-});
-```
-
-#### *[deprecated]* Share Link
-Encrypt and share a secret, but return the share link instead of the secret key. This call isn't provided by the API.
-
-Deprecated in favor of the *share_link* attribute of the *share* method.
-
-```
-shareLink(<secret>, [<options>]) -> string
-```
-
-- `<secret>`: the secret to share (depending on your account type 1k to 10k length)
-- `<options>`: additional api options of type `ApiOptionsShare`
-    - `<passphrase>`: passphrase that will be required to read the secret
-    - `<ttl>`: time in seconds after which the secret will be automatically be deleted ("burned")
-    - `<recipient>`: email address of the person the secret should be sent to by the server
-- Returns the share link as a string
-- Throws
-    - `ConfigError`: no secret provided
-    - `InternalServerError`: unspecified internal server error
-    - `FetchError`: fetch call failed
-    - `NotFoundError`: the call isn't supported by the server
-    - `TimeoutError`: request timeout
-    - `NotAuthorizedError`: invalid username or password
-    - `RateLimitedError`: account has been rate limited due to many requests
-
-Example:
-```javascript 1.6
-ots.shareLink('My very special secret')
-.then((link) => {
-    console.log(`Secret Link: ${link}`);
 })
 .catch((error) => {
     console.error(`Error: ${error}`);
@@ -217,7 +182,7 @@ ots.generate()
 Retrieve a secret from the server. This call is used to get a secret someone else shared with you. If the secret was shared with a passphrase it has to be provided to the call in the options.
 
 ```
-retrieve_secret(secret_key, [<options>]) -> object
+retrieveSecret(secret_key, [<options>]) -> object
 ```
 
 - `<secret_key>`: secret key that was shared with you
@@ -226,7 +191,7 @@ retrieve_secret(secret_key, [<options>]) -> object
 - Returns a promise that provides an `ApiResponseRetrieveSecret` object. The returned object contains all the information of the secret you can access. Important values:
     - `value`: the secret shared with you
 - Throws
-    - `ConfigError`: no secret key provided
+    - `InputError`: no secret key provided
     - `InternalServerError`: unspecified internal server error
     - `FetchError`: fetch call failed
     - `NotFoundError`: the call isn't supported by the server
@@ -237,7 +202,7 @@ retrieve_secret(secret_key, [<options>]) -> object
 
 Example:
 ```javascript 1.6
-ots.retrieve_secret('raldp8')
+ots.retrieveSecret('hbo11uxhmg2gze0mlcmyf4x0qahawqa')
 .then((response) => {
     console.log(`Secret value: ${response.value}`);
 })
@@ -251,7 +216,7 @@ ots.retrieve_secret('raldp8')
 Retrieve metadata for a secret you created.
 
 ```
-retrieve_metadata(metadata_key) -> object
+retrieveMetadata(metadata_key) -> object
 ```
 
 - `<metadata_key>`: metadata key that was shared with you
@@ -260,7 +225,7 @@ retrieve_metadata(metadata_key) -> object
     - `share_link`: the share link of the secret that is supposed to be be shared
     - `status`: status of the secret, e.g. "new", "received", "burned", "viewed", ... 
 - Throws
-    - `ConfigError`: no metadata key provided
+    - `InputError`: no metadata key provided
     - `InternalServerError`: unspecified internal server error
     - `FetchError`: fetch call failed
     - `NotFoundError`: the call isn't supported by the server
@@ -271,7 +236,7 @@ retrieve_metadata(metadata_key) -> object
 
 Example:
 ```javascript 1.6
-ots.retrieve_metadata('raldp8yshsh42hyse')
+ots.retrieveMetadata('hbo11uxhmg2gze0mlcmyf4x0qahawqa')
 .then((response) => {
     console.log(`Status: ${response.status}`);
 })
@@ -293,7 +258,7 @@ burn(metadata_key) -> object
     - `secret_key`: the secret key that is used to **share** the secret
     - `status`: status of the secret set to "burned"
 - Throws
-    - `ConfigError`: no metadata key provided
+    - `InputError`: no metadata key provided
     - `InternalServerError`: unspecified internal server error
     - `FetchError`: fetch call failed
     - `NotFoundError`: the call isn't supported by the server
@@ -318,7 +283,7 @@ ots.burn('raldp8yshsh42hyse')
 Retrieve all recently created secrets and *most* of its metadata.
 
 ```
-recent_metadata() -> Array[object]
+recentMetadata() -> Array[object]
 ```
 
 - Returns a promise that provides an `ApiResponseRecentMetadata` object. The returned object contains a list if objects where each object represents a secret. It has a subset of attributes as described for `retrieve_metadata`.
@@ -332,7 +297,7 @@ recent_metadata() -> Array[object]
 
 Example:
 ```javascript 1.6
-ots.recent_metadata()
+ots.recentMetadata()
 .then((response) => {
     console.log(`Secret 0 state: ${response[0].state}`);
 })

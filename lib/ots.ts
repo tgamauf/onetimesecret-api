@@ -4,7 +4,7 @@
 
 "use strict";
 
-import {ApiRequest} from "./request";
+import {ApiRequest, InputError} from "./request";
 import {ApiVersion, createApiRequest} from "./request_factory";
 
 
@@ -144,14 +144,6 @@ const DEFAULT_URL: string = "https://onetimesecret.com";
 const DEFAULT_API_VERSION: ApiVersion = "v1";
 
 
-class ConfigError extends Error {
-    constructor(message: string) {
-        super(message);
-
-        Object.setPrototypeOf(this, ConfigError.prototype);
-    }
-}
-
 class OneTimeSecretApi {
     private readonly init: ApiInit;
     private readonly apiVersion: ApiVersion;
@@ -173,7 +165,7 @@ class OneTimeSecretApi {
 
         if ((typeof username  === "undefined")
                 || (typeof password === "undefined")) {
-            throw new ConfigError("No username or password provided");
+            throw new InputError("No username or password provided");
         }
 
         this.init = {
@@ -216,7 +208,7 @@ class OneTimeSecretApi {
     public async share(secret: string,
                        options?: ApiOptionsShare): Promise<ApiResponseShare> {
         if (typeof secret === "undefined") {
-            throw new ConfigError("No secret provided");
+            throw new InputError("No secret provided");
         }
 
         const init: ApiInitShare = {
@@ -239,24 +231,6 @@ class OneTimeSecretApi {
             share_link: shareLink,
             ...response,
         };
-    }
-
-    /**
-     * Share a secret and get the link.
-     *
-     * @deprecated will be removed in next major version
-     * @param secret the secret value to encrypt and share (max. 1k-10k length
-     *      depending on your account)
-     * @param options optional parameters
-     * @returns promise that returns response object
-     * @throws error if no secret defined or connection/request fails
-     */
-    public async shareLink(secret: string, options?: ApiOptionsShare): Promise<string> {
-        console.warn("shareLink is deprecated and will be removed in version 2 of the library.");
-
-        const response: ApiResponseShare = await this.share(secret, options);
-
-        return response.share_link;
     }
 
     /**
@@ -303,9 +277,6 @@ class OneTimeSecretApi {
     public async retrieveSecret(
         secretKey: string,
         options?: ApiOptionsRetrieveSecret): Promise<ApiResponseRetrieveSecret> {
-        if (typeof secretKey === "undefined") {
-            throw new ConfigError("No secret_key provided");
-        }
         const init: ApiInitRetrieveSecret = {
             ...JSON.parse(JSON.stringify(this.init)),
             secretKey,
@@ -321,26 +292,6 @@ class OneTimeSecretApi {
     }
 
     /**
-     * Retrieve the secret specified by the key.
-     * Please check the API description for the other available keys:
-     * https://onetimesecret.com/docs/api/secrets
-     *
-     * @deprecated replaced by retrieveSecret
-     * @param secretKey secret key of the secret
-     * @param options optional parameters
-     * @returns that returns response object
-     * @throws error if no secret key defined or connection/request fails
-     */
-    public async retrieve_secret(
-        secretKey: string,
-        options?: ApiOptionsRetrieveSecret): Promise<ApiResponseRetrieveSecret> {
-        console.warn("retrieve_secret is deprecated and will be removed " +
-            "in version 2 of the library. Please use retrieveSecret instead.");
-
-        return await this.retrieveSecret(secretKey, options);
-    }
-
-    /**
      * Retrieve the metadata of the secret specified by the key.
      * Please check the API description for the other available keys:
      * https://onetimesecret.com/docs/api/secrets
@@ -352,9 +303,6 @@ class OneTimeSecretApi {
      */
     public async retrieveMetadata(
         metadataKey: string): Promise<ApiResponseRetrieveMetadata> {
-        if (typeof metadataKey === "undefined") {
-            throw new ConfigError("No metadata_key provided");
-        }
         const init: ApiInitRetrieveMetadata = {
             ...JSON.parse(JSON.stringify(this.init)),
             metadataKey,
@@ -385,36 +333,12 @@ class OneTimeSecretApi {
      * Please check the API description for the other available keys:
      * https://onetimesecret.com/docs/api/secrets
      *
-     * @deprecated replaced by retrieveMetadata
-     * @param metadataKey: private, unique key of the secret used for secret
-     *      management
-     * @returns promise that returns response object
-     * @throws error if no metadata key defined or connection/request fails
-     */
-    public async retrieve_metadata(
-        metadataKey: string): Promise<ApiResponseRetrieveMetadata> {
-        console.warn("retrieve_metadata is deprecated and will be " +
-            "removed in version 2 of the library. Please use retrieveMetadata " +
-            "instead.");
-
-        return await this.retrieveMetadata(metadataKey);
-    }
-
-    /**
-     * Retrieve the metadata of the secret specified by the key.
-     * Please check the API description for the other available keys:
-     * https://onetimesecret.com/docs/api/secrets
-     *
      * @param metadataKey private, unique key of the secret used for secret
      *      management
      * @returns promise that returns response object
      * @throws error if no metadata key defined or connection/request fails
      */
     public async burn(metadataKey: string): Promise<ApiResponseBurn> {
-        if (typeof metadataKey === "undefined") {
-            throw new ConfigError("No metadata_key provided");
-        }
-
         const init: ApiInitBurn = {
             ...JSON.parse(JSON.stringify(this.init)),
             metadataKey,
@@ -445,23 +369,6 @@ class OneTimeSecretApi {
         return await request.send();
     }
 
-    /**
-     * Retrieve a list of recent metadata.
-     * Please check the API description for the other available keys:
-     * https://onetimesecret.com/docs/api/secrets
-     *
-     * @deprecated
-     * @returns promise that returns response object
-     * @throws error if connection/request fails
-     */
-    public async recent_metadata(): Promise<ApiResponseRecentMetadata[]> {
-        console.warn("recent_metadata is deprecated and will be " +
-            "removed in version 2 of the library. Please use recentMetadata " +
-            "instead.");
-
-        return await this.recentMetadata();
-    }
-
     /** Create the secret link from the secret. */
     private createSecretUrl(secretKey: string): string {
 
@@ -470,7 +377,7 @@ class OneTimeSecretApi {
 }
 
 export {
-    ConfigError,
+    InputError,
     ApiOptions,
     ApiVersion,
     ApiResponseState,

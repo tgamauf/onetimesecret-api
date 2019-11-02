@@ -89,21 +89,6 @@ test("share missing secret", async () => {
     }
 });
 
-// Test share link
-test("share link ok", async () => {
-    expect.assertions(1);
-    const ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "ok_url"});
-    const response = await ots.shareLink("test");
-    expect(response).toEqual("ok_url/secret/test");
-});
-
-test("share with optional parameters ok", async () => {
-    expect.assertions(1);
-    const ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "ok_url"});
-    const response = await ots.shareLink("test", {passphrase: "yes", ttl: 10, recipient: "me"});
-    expect(response).toEqual("ok_url/secret/test");
-});
-
 // Test generate
 test("generate ok", async () => {
     expect.assertions(2);
@@ -124,14 +109,14 @@ test("share with optional parameters ok", async () => {
 test("retrieve secret ok", async () => {
     expect.assertions(1);
     const ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "ok_url"});
-    const response = await ots.retrieveSecret("secretKey");
+    const response = await ots.retrieveSecret("retrieveSecretKeyOk123456789012");
     expect(response.value).toEqual("secret");
 });
 
 test("retrieve secret with password ok", async () => {
     expect.assertions(1);
     const ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "ok_url"});
-    const response = await ots.retrieveSecret("secretKey", {passphrase: "yes"});
+    const response = await ots.retrieveSecret("retrieveSecretKeyOk123456789012", {passphrase: "yes"});
     expect(response.value).toEqual("secret");
 });
 
@@ -141,7 +126,17 @@ test("retrieve secret missing secret key", async () => {
         const ots = new OneTimeSecretApi("ok_user", "ok_api_key");
         await ots.retrieveSecret(undefined);
     } catch (e) {
-        expect(e.message).toEqual("No secret_key provided");
+        expect(e.message).toEqual("Invalid key provided: undefined");
+    }
+});
+
+test("retrieve secret invalid secret key", async () => {
+    expect.assertions(1);
+    try {
+        const ots = new OneTimeSecretApi("ok_user", "ok_api_key");
+        await ots.retrieveSecret("IAmToShort");
+    } catch (e) {
+        expect(e.message).toEqual("Invalid key provided: IAmToShort");
     }
 });
 
@@ -149,7 +144,7 @@ test("retrieve secret unknown secret key", async () => {
     expect.assertions(1);
     try {
         const ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "ok_url"});
-        await ots.retrieveSecret("unknownKey");
+        await ots.retrieveSecret("retrieveSecretKeyUnknown1234567");
     } catch (e) {
         expect(e.message).toEqual("Unknown secret");
     }
@@ -159,7 +154,7 @@ test("retrieve secret unknown secret key", async () => {
 test("retrieve metadata ok", async () => {
     expect.assertions(2);
     const ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "ok_url"});
-    const response = await ots.retrieveMetadata("mykey");
+    const response = await ots.retrieveMetadata("retrieveMetadataOk1234567890123");
     expect(response.secret_key).toEqual("secret");
     expect(response.share_link).toEqual("ok_url/secret/secret");
 });
@@ -168,7 +163,7 @@ test("retrieve metadata ok", async () => {
 test("retrieve metadata burned ok", async () => {
     expect.assertions(2);
     let ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "ok_url"});
-    const response = await ots.retrieveMetadata("myBurnedKey");
+    const response = await ots.retrieveMetadata("retrieveMetadataBurnedOk1234567");
     expect(response.metadata_key).toEqual("metadata");
     expect(response.share_link).toBeUndefined();
 });
@@ -179,7 +174,17 @@ test("retrieve metadata missing metadata key", async () => {
         const ots = new OneTimeSecretApi("ok_user", "ok_api_key");
         await ots.retrieveMetadata(undefined);
     } catch (e) {
-        expect(e.message).toEqual("No metadata_key provided");
+        expect(e.message).toEqual("Invalid key provided: undefined");
+    }
+});
+
+test("retrieve metadata invalid metadata key", async () => {
+    expect.assertions(1);
+    try {
+        const ots = new OneTimeSecretApi("ok_user", "ok_api_key");
+        await ots.retrieveMetadata("IAmTooShort");
+    } catch (e) {
+        expect(e.message).toEqual("Invalid key provided: IAmTooShort");
     }
 });
 
@@ -187,7 +192,7 @@ test("retrieve metadata missing metadata key", async () => {
 test("burn secret ok", async () => {
     expect.assertions(1);
     const ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "ok_url"});
-    const response = await ots.burn("burnKey");
+    const response = await ots.burn("hbo11uxhmg2gze0mlcmyf4x0qahawqa");
     expect(response.state).toEqual("burned");
 });
 
@@ -197,11 +202,18 @@ test("burn missing metadata key", async () => {
         const ots = new OneTimeSecretApi("ok_user", "ok_api_key");
         await ots.burn(undefined);
     } catch (e) {
-        expect(e.message).toEqual("No metadata_key provided");
+        expect(e.message).toEqual("Invalid key provided: undefined");
     }
 });
 
 // Test recent metadata
+test("recent metadata ok", async () => {
+    expect.assertions(1);
+    const ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "ok_url"});
+    const response = await ots.recentMetadata();
+    expect(response).toEqual([{metadata_key: 0}]);
+});
+
 test("recent metadata ok", async () => {
     expect.assertions(1);
     const ots = new OneTimeSecretApi("ok_user", "ok_api_key", {url: "ok_url"});

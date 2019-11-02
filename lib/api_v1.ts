@@ -54,14 +54,17 @@ interface BurnInit extends ApiRequestInit {
     metadataKey: string;
 }
 
+class ApiRequestV1 extends ApiRequest {
+    protected readonly keyRegex: RegExp = new RegExp("^[A-Za-z0-9]{31}$");
+}
 
-class ApiRequestStatus extends ApiRequest {
+class ApiRequestStatus extends ApiRequestV1 {
 
     /**
      * Check server status.
      *
      * @constructor
-     * @augments ApiRequest
+     * @augments ApiRequestV1
      */
     constructor(init: ApiRequestInit) {
         super(init);
@@ -86,13 +89,13 @@ class ApiRequestStatus extends ApiRequest {
     }
 }
 
-class ApiRequestShare extends ApiRequest {
+class ApiRequestShare extends ApiRequestV1 {
 
     /**
      * Send text to server for sharing.
      *
      * @constructor
-     * @augments ApiRequest
+     * @augments ApiRequestV1
      */
     constructor(init: ShareInit) {
         super(init);
@@ -114,12 +117,12 @@ class ApiRequestShare extends ApiRequest {
     }
 }
 
-class ApiRequestGenerate extends ApiRequest {
+class ApiRequestGenerate extends ApiRequestV1 {
 
     /** Request a short, unique secret for sharing.
      *
      * @constructor
-     * @augments ApiRequest
+     * @augments ApiRequestV1
      */
     constructor(init: GenerateInit) {
         super(init);
@@ -143,16 +146,18 @@ class ApiRequestGenerate extends ApiRequest {
     }
 }
 
-class ApiRequestRetrieveSecret extends ApiRequest {
+class ApiRequestRetrieveSecret extends ApiRequestV1 {
 
     /**
      * Retrieve a secret.
      *
      * @constructor
-     * @augments ApiRequest
+     * @augments ApiRequestV1
      */
     constructor(init: RetrieveSecretInit) {
         super(init);
+
+        this.checkValidKey(init.secretKey);
 
         const body: RetrieveSecretBody = {};
         if (typeof init.passphrase !== "undefined") {
@@ -167,32 +172,36 @@ class ApiRequestRetrieveSecret extends ApiRequest {
     }
 }
 
-class ApiRequestRetrieveMetadata extends ApiRequest {
+class ApiRequestRetrieveMetadata extends ApiRequestV1 {
 
     /**
      * Retrieve metadata for a secret.
      *
      * @constructor
-     * @augments ApiRequest
+     * @augments ApiRequestV1
      */
     constructor(init: RetrieveMetadataInit) {
         super(init);
+
+        this.checkValidKey(init.metadataKey);
 
         this.path = ["private", init.metadataKey].join("/");
         this.method = "POST";
     }
 }
 
-class ApiRequestBurn extends ApiRequest {
+class ApiRequestBurn extends ApiRequestV1 {
 
     /**
      * Burn a secret.
      *
      * @constructor
-     * @augments ApiRequest
+     * @augments ApiRequestV1
      */
     constructor(init: BurnInit) {
         super(init);
+
+        this.checkValidKey(init.metadataKey);
 
         this.path = ["private", init.metadataKey, "burn"].join("/");
         this.method = "POST";

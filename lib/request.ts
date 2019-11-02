@@ -106,6 +106,14 @@ class NetworkError extends Error {
     }
 }
 
+class InputError extends Error {
+    constructor(message: string) {
+        super(message);
+
+        Object.setPrototypeOf(this, InputError.prototype);
+    }
+}
+
 
 /**
  * Join up the parameters in the dict to conform to
@@ -196,6 +204,7 @@ async function fetchWithTimeout(
 }
 
 class ApiRequest {
+    protected readonly keyRegex: RegExp;
     protected path: string;
     protected method: Method;
     protected body?: any;
@@ -331,6 +340,19 @@ class ApiRequest {
     protected process(response: object): any {
         return response;
     }
+
+    /**
+     * Check the if the provided key is valid.
+     *
+     * @param key key to check
+     * @raises InputError if an invalid key has been provided
+     */
+    protected checkValidKey(key?: string): void {
+        if ((typeof key === "undefined") || !this.keyRegex.test(key)) {
+            throw new InputError(`Invalid key provided: ${key}`);
+        }
+    }
+
 }
 
 export {
@@ -340,6 +362,7 @@ export {
     NotAuthorizedError,
     RateLimitedError,
     InternalServerError,
+    InputError,
     Method,
     ApiRequestInit,
     urlEncodeDict,

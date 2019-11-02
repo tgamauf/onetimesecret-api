@@ -84,7 +84,7 @@ const REQUESTS = [
         BODY: new RegExp("^passphrase=\\w+$"),
         BODY_REQUIRED: false,
         METHOD: "POST",
-        PATH_PATTERN: new RegExp(`${[BASE_PATH_REGEX, "secret", "secretKey"].join("/")}`),
+        PATH_PATTERN: new RegExp(`${[BASE_PATH_REGEX, "secret", "retrieveSecretKeyOk123456789012"].join("/")}`),
         RESPONSE: new Response({value: "secret"}, {ok: true, status: 200}),
     },
     {
@@ -92,7 +92,7 @@ const REQUESTS = [
         BODY: new RegExp("^passphrase=\\w+$"),
         BODY_REQUIRED: false,
         METHOD: "POST",
-        PATH_PATTERN: new RegExp(`${[BASE_PATH_REGEX, "secret", "unknownKey"].join("/")}`),
+        PATH_PATTERN: new RegExp(`${[BASE_PATH_REGEX, "secret", "retrieveSecretKeyUnknown1234567"].join("/")}`),
         RESPONSE: new Response({message: "Unknown secret"}, {
             headers: ERROR_RESPONSE_HEADER_JSON,
             ok: false,
@@ -103,21 +103,21 @@ const REQUESTS = [
         // retrieve metadata
         BODY: null,
         METHOD: "POST",
-        PATH_PATTERN: new RegExp(`${[BASE_PATH_REGEX, "private", "mykey"].join("/")}`),
+        PATH_PATTERN: new RegExp(`${[BASE_PATH_REGEX, "private", "retrieveMetadataOk1234567890123"].join("/")}`),
         RESPONSE: new Response({secret_key: "secret"}, {ok: true, status: 200}),
     },
     {
         // retrieve metadata burned secret
         BODY: null,
         METHOD: "POST",
-        PATH_PATTERN: new RegExp(`${[BASE_PATH_REGEX, "private", "myBurnedKey"].join("/")}`),
+        PATH_PATTERN: new RegExp(`${[BASE_PATH_REGEX, "private", "retrieveMetadataBurnedOk1234567"].join("/")}`),
         RESPONSE: new Response({metadata_key: "metadata"}, {ok: true, status: 200}),
     },
     {
         // burn
         BODY: null,
         METHOD: "POST",
-        PATH_PATTERN: new RegExp(`${[BASE_PATH_REGEX, "private", "burnKey", "burn"].join("/")}`),
+        PATH_PATTERN: new RegExp(`${[BASE_PATH_REGEX, "private", "hbo11uxhmg2gze0mlcmyf4x0qahawqa", "burn"].join("/")}`),
         RESPONSE: new Response({state: "burned"}, {ok: true, status: 200}),
     },
     {
