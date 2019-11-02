@@ -32,7 +32,7 @@
     "typescript": "^3.6.4"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": "8.* || >= 10.*"
   },
   "bugs": {
     "url": "https://github.com/tgamauf/onetimesecret-api/issues"
