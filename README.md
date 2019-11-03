@@ -82,9 +82,9 @@ status() -> boolean
 - Returns boolean state of server
 - Throws
     - `InternalServerError`: unspecified internal server error
-    - `TimeoutError`: request timeout
     - `NotAuthorizedError`: invalid username or password
     - `RateLimitedError`: account has been rate limited due to many requests
+    - `TimeoutError`: request timeout
 
 Example:
 ```javascript 1.6
@@ -116,11 +116,11 @@ share(<secret>, [<options>]) -> object
 - Throws
     - `InputError`: no secret provided
     - `InternalServerError`: unspecified internal server error
-    - `FetchError`: fetch call failed
+    - `NetworkError`: network request failed
     - `NotFoundError`: the call isn't supported by the server
-    - `TimeoutError`: request timeout
     - `NotAuthorizedError`: invalid username or password
     - `RateLimitedError`: account has been rate limited due to many requests
+    - `TimeoutError`: request timeout
 
 Examples:
 ```javascript 1.6
@@ -160,11 +160,11 @@ generate([<options>]) -> object
     - `metadata_key`: key used to manage the secret; this key must remain **private**
 - Throws
     - `InternalServerError`: unspecified internal server error
-    - `FetchError`: fetch call failed
-    - `TimeoutError`: request timeout
+    - `NetworkError`: network request failed
     - `NotFoundError`: the call isn't supported by the server
     - `NotAuthorizedError`: invalid username or password
     - `RateLimitedError`: account has been rate limited due to many requests
+    - `TimeoutError`: request timeout
     
 Example:
 ```javascript 1.6
@@ -193,12 +193,12 @@ retrieveSecret(secret_key, [<options>]) -> object
 - Throws
     - `InputError`: no secret key provided
     - `InternalServerError`: unspecified internal server error
-    - `FetchError`: fetch call failed
+    - `NetworkError`: network request failed
     - `NotFoundError`: the call isn't supported by the server
-    - `UnknownSecretError`: secret key not found
-    - `TimeoutError`: request timeout
     - `NotAuthorizedError`: invalid username or password
     - `RateLimitedError`: account has been rate limited due to many requests
+    - `TimeoutError`: request timeout
+    - `UnknownSecretError`: secret key not found
 
 Example:
 ```javascript 1.6
@@ -227,12 +227,12 @@ retrieveMetadata(metadata_key) -> object
 - Throws
     - `InputError`: no metadata key provided
     - `InternalServerError`: unspecified internal server error
-    - `FetchError`: fetch call failed
+    - `NetworkError`: network request failed
     - `NotFoundError`: the call isn't supported by the server
-    - `UnknownSecretError`: metadata key not found
-    - `TimeoutError`: request timeout
     - `NotAuthorizedError`: invalid username or password
     - `RateLimitedError`: account has been rate limited due to many requests
+    - `TimeoutError`: request timeout
+    - `UnknownSecretError`: metadata key not found
 
 Example:
 ```javascript 1.6
@@ -260,12 +260,12 @@ burn(metadata_key) -> object
 - Throws
     - `InputError`: no metadata key provided
     - `InternalServerError`: unspecified internal server error
-    - `FetchError`: fetch call failed
+    - `NetworkError`: network request failed
     - `NotFoundError`: the call isn't supported by the server
-    - `UnknownSecretError`: metadata key not found
-    - `TimeoutError`: request timeout
     - `NotAuthorizedError`: invalid username or password
     - `RateLimitedError`: account has been rate limited due to many requests
+    - `TimeoutError`: request timeout
+    - `UnknownSecretError`: metadata key not found
 
 Example:
 ```javascript 1.6
@@ -289,11 +289,11 @@ recentMetadata() -> Array[object]
 - Returns a promise that provides an `ApiResponseRecentMetadata` object. The returned object contains a list if objects where each object represents a secret. It has a subset of attributes as described for `retrieve_metadata`.
 - Throws
     - `InternalServerError`: unspecified internal server error
-    - `FetchError`: fetch call failed
+    - `NetworkError`: network request failed
     - `NotFoundError`: the call isn't supported by the server
-    - `TimeoutError`: request timeout
     - `NotAuthorizedError`: invalid username or password
     - `RateLimitedError`: account has been rate limited due to many requests
+    - `TimeoutError`: request timeout
 
 Example:
 ```javascript 1.6
