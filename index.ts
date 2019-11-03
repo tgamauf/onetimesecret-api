@@ -16,6 +16,7 @@ import {
 } from "./lib/ots";
 import {
     InternalServerError,
+    NetworkError,
     NotAuthorizedError,
     NotFoundError,
     RateLimitedError,
@@ -24,13 +25,14 @@ import {
 } from "./lib/request";
 
 export {
+    InputError,
+    InternalServerError,
+    NetworkError,
+    NotAuthorizedError,
+    NotFoundError,
+    RateLimitedError,
     TimeoutError,
     UnknownSecretError,
-    NotFoundError,
-    NotAuthorizedError,
-    RateLimitedError,
-    InternalServerError,
-    InputError,
     ApiOptions,
     ApiVersion,
     ApiResponseState,

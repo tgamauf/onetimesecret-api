@@ -29,6 +29,9 @@ declare class RateLimitedError extends Error {
 declare class InternalServerError extends Error {
     constructor(message: string);
 }
+declare class NetworkError extends Error {
+    constructor(message: string);
+}
 declare class InputError extends Error {
     constructor(message: string);
 }
@@ -87,4 +90,4 @@ declare class ApiRequest {
      */
     protected checkValidKey(key?: string): void;
 }
-export { TimeoutError, UnknownSecretError, NotFoundError, NotAuthorizedError, RateLimitedError, InternalServerError, InputError, Method, ApiRequestInit, urlEncodeDict, ApiRequest };
+export { InputError, InternalServerError, NetworkError, NotFoundError, NotAuthorizedError, RateLimitedError, TimeoutError, UnknownSecretError, Method, ApiRequest, ApiRequestInit, urlEncodeDict, };
