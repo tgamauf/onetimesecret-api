@@ -1,4 +1,5 @@
-[![npm version](https://badge.fury.io/js/onetimesecret-api.svg)](https://badge.fury.io/js/onetimesecret-api) [![Build Status](https://travis-ci.org/tgamauf/onetimesecret-api.svg?branch=master)](https://travis-ci.org/tgamauf/onetimesecret-api)
+[![npm version](https://img.shields.io/npm/v/onetimesecret-api?color=blue)](https://img.shields.io/npm/v/onetimesecret-api)
+[![Build Status](https://travis-ci.org/tgamauf/onetimesecret-api.svg?branch=master)](https://travis-ci.org/tgamauf/onetimesecret-api)
 
 ## onetimesecret-api
 A thin Javascript wrapper around the [OneTimeSecret API](https://onetimesecret.com/docs/api).
