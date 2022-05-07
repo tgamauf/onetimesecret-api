@@ -1,6 +1,6 @@
 {
   "name": "onetimesecret-api",
-  "version": "2.0.3",
+  "version": "2.1.0",
   "description": "node.js module for the OneTimeSecret API",
   "main": "index.ts",
   "repository": {
