@@ -24,6 +24,7 @@ import {
     UnknownSecretError,
 } from "./lib/request";
 
+export default OneTimeSecretApi;
 export {
     InputError,
     InternalServerError,
@@ -33,18 +34,19 @@ export {
     RateLimitedError,
     TimeoutError,
     UnknownSecretError,
-    ApiOptions,
-    ApiVersion,
-    ApiResponseState,
-    ApiOptionsShare,
-    ApiResponseShare,
-    ApiOptionsGenerate,
-    ApiResponseGenerate,
-    ApiOptionsRetrieveSecret,
-    ApiResponseRetrieveSecret,
-    ApiResponseRetrieveMetadata,
-    ApiResponseBurn,
-    ApiResponseRecentMetadata,
     OneTimeSecretApi
 };
-export default OneTimeSecretApi;
+export type {
+    ApiOptions,
+    ApiOptionsGenerate,
+    ApiOptionsRetrieveSecret,
+    ApiOptionsShare,
+    ApiResponseBurn,
+    ApiResponseGenerate,
+    ApiResponseRecentMetadata,
+    ApiResponseRetrieveMetadata,
+    ApiResponseRetrieveSecret,
+    ApiResponseState,
+    ApiResponseShare,
+    ApiVersion,
+}

@@ -70,7 +70,9 @@ function createApiRequest(
 }
 
 export {
-    RequestType,
-    ApiVersion,
     createApiRequest
 };
+export type {
+    RequestType,
+    ApiVersion
+}

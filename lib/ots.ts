@@ -378,17 +378,19 @@ class OneTimeSecretApi {
 
 export {
     InputError,
-    ApiOptions,
-    ApiVersion,
-    ApiResponseState,
-    ApiOptionsShare,
-    ApiResponseShare,
-    ApiOptionsGenerate,
-    ApiResponseGenerate,
-    ApiOptionsRetrieveSecret,
-    ApiResponseRetrieveSecret,
-    ApiResponseRetrieveMetadata,
-    ApiResponseBurn,
-    ApiResponseRecentMetadata,
     OneTimeSecretApi
 };
+export type {
+    ApiOptions,
+    ApiResponseBurn,
+    ApiOptionsGenerate,
+    ApiOptionsRetrieveSecret,
+    ApiOptionsShare,
+    ApiResponseGenerate,
+    ApiResponseRecentMetadata,
+    ApiResponseRetrieveMetadata,
+    ApiResponseRetrieveSecret,
+    ApiResponseShare,
+    ApiResponseState,
+    ApiVersion,
+}

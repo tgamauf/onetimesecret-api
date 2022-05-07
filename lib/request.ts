@@ -364,8 +364,10 @@ export {
     RateLimitedError,
     TimeoutError,
     UnknownSecretError,
-    Method,
     ApiRequest,
-    ApiRequestInit,
     urlEncodeDict,
+}
+export type {
+    ApiRequestInit,
+    Method,
 }
